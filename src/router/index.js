@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import adminLayout from "../layout/adminLayout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,11 +35,19 @@ const router = createRouter({
       component: () => import('../views/admin/login.vue')
     },
     {
-      path:'/admin',
-      name:"admin",
-
-
+      path:'/adminHome',
+      component: adminLayout,
+      children:[
+        {
+          path:'/adminHome',
+          name:'/adminHome',
+          component: () => import('../views/admin/Home.vue')
+        }
+      ]
     }
+
+
+
   ]
 })
 

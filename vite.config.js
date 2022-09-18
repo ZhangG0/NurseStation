@@ -16,12 +16,15 @@ export default defineConfig({
         scss: {
           additionalData:'@import "./src/assets/style/main.scss";'
         }
-      }
+      },
+      devSourcemap:true
     },
 
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+
+
 })
