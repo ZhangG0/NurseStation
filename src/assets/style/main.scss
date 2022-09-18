@@ -1,0 +1,32 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+.background_div{
+  background-color: transparent;
+
+}
+
+//flex 居中
+.flexCenter{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+//表单样式
+.myForm{
+  padding: 15px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+
+  .myFormItem{
+    margin-bottom: 15px;
+  }
+
+}
