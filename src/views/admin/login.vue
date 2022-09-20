@@ -59,6 +59,7 @@ import {reactive} from "vue";
 import Request from "../../utils/Request";
 
 export default {
+  name:"AdminLogin",
   data(){
     return {
       formData:{},
@@ -105,9 +106,27 @@ export default {
               let data = res.data
               console.log(data)
               window.localStorage.setItem("token",data.token);
+              this.$message({
+                type:'success',
+                message:'登陆成功,'+res.msg,
+                center: true,
+                duration:1000
+              })
+              this.$router.push('/adminHome');
+            }else {
+              this.$message({
+                type:'error',
+                message:'登陆失败,'+res.msg,
+                center: true,
+                duration:1000
+              })
             }
-
-
+          }).catch((err) => {
+            console.log(err);
+            this.$message({
+              type:'error',
+              message:'网络异常'
+            })
           })
 
         }
