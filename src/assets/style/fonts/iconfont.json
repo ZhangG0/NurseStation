@@ -6,6 +6,34 @@
   "description": "毕设，护士站管理系统",
   "glyphs": [
     {
+      "icon_id": "16198482",
+      "name": "病房",
+      "font_class": "bingfang",
+      "unicode": "e91b",
+      "unicode_decimal": 59675
+    },
+    {
+      "icon_id": "16198501",
+      "name": "护士",
+      "font_class": "hushi",
+      "unicode": "e91d",
+      "unicode_decimal": 59677
+    },
+    {
+      "icon_id": "16204059",
+      "name": "病房",
+      "font_class": "bingfang1",
+      "unicode": "e9c3",
+      "unicode_decimal": 59843
+    },
+    {
+      "icon_id": "16204062",
+      "name": "护士",
+      "font_class": "hushi1",
+      "unicode": "e9c5",
+      "unicode_decimal": 59845
+    },
+    {
       "icon_id": "7791978",
       "name": "密码",
       "font_class": "ziyuanxhdpi",
