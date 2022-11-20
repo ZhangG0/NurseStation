@@ -13,6 +13,8 @@
     "element-plus": "^2.2.16",
     "node-sass": "^7.0.1",
     "pinia": "^2.0.21",
+    "unplugin-vue-components": "^0.22.9",
+    "vant": "^3.6.5",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5"
   },
@@ -24,6 +26,7 @@
     "jsdom": "^20.0.0",
     "sass": "^1.54.8",
     "vite": "^3.0.9",
+    "vite-plugin-style-import": "^1.4.1",
     "vitest": "^0.22.1"
   }
 }

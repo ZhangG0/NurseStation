@@ -1,10 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import adminLayout from "../layout/adminLayout.vue";
+import * as layout from '@/layout'
+import * as view from "@/views/index.js";
 
 const routes = [
+  //默认 重定向至User
+  {
+    path: '',
+    name: 'home',
+    redirect:'/user'
+  },
   //病人端
   {
-
+    component: layout.userLayout,
+    children: [
+      {
+        path: '/user',
+        name: 'User',
+        component: view.UserIndex
+      }
+    ]
   },
 
   //护士端
@@ -16,16 +30,16 @@ const routes = [
   {
     path:'/admin/login',
     name:'adminLogin',
-    component: () => import('../views/admin/login.vue')
+    component: view.AdminLogin
   },
   {
     path:'/adminHome',
-    component: adminLayout,
+    component: layout.adminLayout,
     children:[
       {
         path:'/adminHome',
         name:'/adminHome',
-        component: () => import('../views/admin/Home.vue')
+        component: view.AdminHome
       }
     ]
   }
