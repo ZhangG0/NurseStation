@@ -7,16 +7,26 @@ const routes = [
   {
     path: '',
     name: 'home',
-    redirect:'/user'
+    redirect:'/user/today'
   },
   //病人端
   {
     component: layout.userLayout,
     children: [
       {
-        path: '/user',
-        name: 'User',
+        path: '/user/today',
+        name: 'User-Today',
         component: view.UserIndex
+      },
+      {
+        path: '/community',
+        name: 'Community',
+        component: view.Community
+      },
+      {
+        path: '/personInfo',
+        name: 'PersonInfo',
+        component: view.PersonInfo
       }
     ]
   },
