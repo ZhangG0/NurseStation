@@ -1,0 +1,12 @@
+$DarkThemeGreen: #00B5AAFF;   //深主题绿
+$ThemeGreen: #1FCCB5FF;       //主题绿
+$LessThemeGreen: #72D0C5FF;   //弱主题绿
+$LightThemeGreen: #E7F8F4FF;  //浅主题绿
+
+
+:export{
+  LightThemeGreen: $LightThemeGreen;
+  LessThemeGreen: $LessThemeGreen;
+  ThemeGreen: $ThemeGreen;
+  DarkThemeGreen: $DarkThemeGreen;
+}

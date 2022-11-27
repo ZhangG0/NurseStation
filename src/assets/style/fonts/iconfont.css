@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 3633800 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1669520957321') format('woff2'),
-       url('iconfont.woff?t=1669520957321') format('woff'),
-       url('iconfont.ttf?t=1669520957321') format('truetype');
+       url('iconfont.woff2?t=1669557590373') format('woff2'),
+       url('iconfont.woff?t=1669557590373') format('woff'),
+       url('iconfont.ttf?t=1669557590373') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,38 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-hospital:before {
+  content: "\e86f";
+}
+
+.icon-bingfang2:before {
+  content: "\e870";
+}
+
+.icon-yisheng1:before {
+  content: "\e872";
+}
+
+.icon-hushi2:before {
+  content: "\e873";
+}
+
+.icon-shoushudao1:before {
+  content: "\e876";
+}
+
+.icon-zhusheqi1:before {
+  content: "\e87e";
+}
+
+.icon-yaowan1:before {
+  content: "\e88f";
+}
+
+.icon-zhongyi1:before {
+  content: "\e8d4";
 }
 
 .icon-yiyuan:before {

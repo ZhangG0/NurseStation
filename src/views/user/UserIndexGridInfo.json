@@ -1,30 +1,30 @@
 [
   {
     "text": "我的医生",
-    "icon": "yisheng"
+    "icon": "yisheng1"
   },
   {
     "text": "我的护士",
-    "icon": "hushi"
+    "icon": "hushi2"
   },
   {
     "text": "用药",
-    "icon": "yaowan"
+    "icon": "yaowan1"
   },
   {
     "text": "治疗",
-    "icon": "zhusheqi"
+    "icon": "zhusheqi1"
   },
   {
     "text": "手术安排",
-    "icon": "shoushudao"
+    "icon": "shoushudao1"
   },
   {
     "text": "饮食建议",
-    "icon": "zhongyi"
+    "icon": "zhongyi1"
   },
   {
     "text": "病房信息 ",
-    "icon": "bingfang"
+    "icon": "bingfang2"
   }
 ]

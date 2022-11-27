@@ -6,7 +6,8 @@ import 'element-plus/dist/index.css'
 //引入iconfont
 import './assets/style/fonts/iconfont.css'
 //引入vant
-import { Button } from 'vant';
+import { Button} from 'vant';
+import 'vant/es/toast/style';
 
 import App from './App.vue'
 import router from './router'
