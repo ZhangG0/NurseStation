@@ -13,7 +13,7 @@
           </template>
         </van-tabbar-item>
         <van-tabbar-item icon="wap-home-o" name="community" to="/community">互动社区</van-tabbar-item>
-        <van-tabbar-item icon="chat-o" name="chat">消息</van-tabbar-item>
+        <van-tabbar-item icon="chat-o" name="chat" to="/myMessage">消息</van-tabbar-item>
         <van-tabbar-item icon="user-o" name="user" to="/personInfo">我的</van-tabbar-item>
       </van-tabbar>
     </div>

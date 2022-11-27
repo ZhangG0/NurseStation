@@ -27,6 +27,11 @@ const routes = [
         path: '/personInfo',
         name: 'PersonInfo',
         component: view.PersonInfo
+      },
+      {
+        path: '/myMessage',
+        name: 'MyMessage',
+        component: view.MyMessage
       }
     ]
   },
