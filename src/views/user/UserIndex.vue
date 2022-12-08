@@ -15,7 +15,7 @@
       </div>
       <div class="nextTreatTime flexCenter">
         <h4 class="TitleText">据下次治疗时间还剩下</h4>
-        <van-count-down :time="10*1000" @finish="onFinish">
+        <van-count-down :time="3*60*60*1000" @finish="onFinish">
           <template #default="timeData">
             <span class="block">{{ timeData.hours }}</span>
             <span class="colon">:</span>
@@ -116,7 +116,6 @@ const onFinish = () => {
 
 .background_div{
   padding-top: 0;
-
 
 
   .FirstPart{
