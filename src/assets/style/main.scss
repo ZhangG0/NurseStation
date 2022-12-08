@@ -6,7 +6,7 @@
 }
 .background_div{
   background-color: transparent;
-  padding: 10px;
+  padding: 0 10px;
 
 }
 
@@ -16,6 +16,13 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
+}
+
+.flexAllCenter{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
 }
 
 //表单样式
