@@ -13,6 +13,7 @@
     "element-plus": "^2.2.16",
     "node-sass": "^7.0.1",
     "pinia": "^2.0.21",
+    "pinia-plugin-persistedstate": "^3.0.1",
     "unplugin-vue-components": "^0.22.9",
     "vant": "^3.6.5",
     "vue": "^3.2.38",
