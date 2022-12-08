@@ -6,15 +6,15 @@
 
     <div style="margin-top: 50px">
       <van-tabbar v-model="active" :active-color="$style['ThemeGreen']">
-        <van-tabbar-item name="today" to="/user/today">
+        <van-tabbar-item name="User-Today" to="/user/today">
           <span>今日医疗</span>
           <template #icon="">
             <van-icon class-prefix="icon" class="iconfont myIcon" :name="icon.inactive"></van-icon>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item icon="wap-home-o" name="community" to="/community">互动社区</van-tabbar-item>
-        <van-tabbar-item icon="chat-o" name="chat" to="/myMessage">消息</van-tabbar-item>
-        <van-tabbar-item icon="user-o" name="user" to="/personInfo">我的</van-tabbar-item>
+        <van-tabbar-item icon="wap-home-o" name="Community" to="/community">互动社区</van-tabbar-item>
+        <van-tabbar-item icon="chat-o" name="MyMessage" to="/myMessage">消息</van-tabbar-item>
+        <van-tabbar-item icon="user-o" name="PersonInfo" to="/personInfo">我的</van-tabbar-item>
       </van-tabbar>
     </div>
 
@@ -23,7 +23,9 @@
 
 <script setup>
 import {ref} from "vue";
-const active = ref('today')
+import {useRouter} from "vue-router";
+const nowRouterName = useRouter().currentRoute.value.name;
+const active = ref(nowRouterName)
 const icon = {
   inactive: 'hushi2',
 };
