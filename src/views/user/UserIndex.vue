@@ -112,7 +112,7 @@ const onFinish = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/style/globalVariables";
+@import "@/assets/style/globalVariables.module.scss";
 
 .background_div{
   padding-top: 0;

@@ -39,4 +39,4 @@ const icon = {
   font-size: 22px;
 }
 </style>
-<style module lang="scss" src="/src/assets/style/globalVariables.scss"></style>
+<style module lang="scss" src="/src/assets/style/globalVariables.module.scss"></style>
