@@ -104,7 +104,6 @@ export default {
           Request.post('/admin/login',this.formData).then( res => {
             if (res.status === 200){
               let data = res.data
-              console.log(data)
               window.localStorage.setItem("token",data.token);
               this.$message({
                 type:'success',
