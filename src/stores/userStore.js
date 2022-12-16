@@ -39,7 +39,7 @@ export const useUserStore = defineStore("user", {
     },
     actions: {
         initUser(Data){
-            this.phoneNumber = Data.USER_PHONE;
+            this.phoneNumber = Data.userPhone;
             this.userData = Data;
         }
     },
