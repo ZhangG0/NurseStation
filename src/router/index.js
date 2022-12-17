@@ -75,7 +75,7 @@ const routes = [
     children:[
       {
         path:'/adminHome',
-        name:'/adminHome',
+        name:'adminHome',
         component: view.AdminHome
       }
     ]
@@ -92,7 +92,7 @@ router.beforeEach((to, from, next) => {
   //路由守卫，访问权限配置
   const userStore = useUserStore();
   if (to.meta.Authentication) { //需要登录才能进入
-    if (localStorage.getItem("NurseToken") && userStore.userData.USER_CODE !== -1) {
+    if (localStorage.getItem("NurseToken") && userStore.userData.userId !== -1) {
       /** 判断是否为歌手*/
       if (to.meta.SingerOnly) {
         if (userStore.userData.role !== 0) {
@@ -101,6 +101,7 @@ router.beforeEach((to, from, next) => {
           alert("无访问权限!身份认证异常");
           next('/singHome')
         }
+
       } else {
         next()
       }

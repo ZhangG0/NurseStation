@@ -22,13 +22,19 @@ export const useUserStore = defineStore("user", {
                 userAvatarUrl: null,
                 userAvatarName: null,
             },
-            phoneNumber:""
         }
     },
     getters: {
         getPhone(){
-            if (this.phoneNumber) {
-                return this.phoneNumber.replace(this.phoneNumber.substring(3, 7), "****");
+            if (this.userData.userPhone) {
+                return this.userData.userPhone.replace(this.userData.userPhone.substring(3, 7), "****");
+            } else {
+                return undefined;
+            }
+        },
+        getIdCode(){
+            if (this.userData.userCode) {
+                return this.userData.userCode.replace(this.userData.userCode.substring(14,18), "****");
             } else {
                 return undefined;
             }
@@ -39,7 +45,6 @@ export const useUserStore = defineStore("user", {
     },
     actions: {
         initUser(Data){
-            this.phoneNumber = Data.userPhone;
             this.userData = Data;
         }
     },

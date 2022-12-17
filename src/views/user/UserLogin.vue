@@ -11,7 +11,7 @@
           <van-cell-group inset>
             <van-field
                 v-model="username"
-                name="phone"
+                name="userPhone"
                 label="手机号"
                 placeholder="请输入手机号"
                 :rules="[{ required: true, message: '请填写手机号' }]"
@@ -19,7 +19,7 @@
             <van-field
                 v-model="password"
                 type="password"
-                name="password"
+                name="userPassword"
                 label="密码"
                 placeholder="请输入密码"
                 :rules="[{ required: true, message: '请填写密码' }]"
@@ -43,12 +43,21 @@
         <h2 class="headerTitle">
           欢迎注册住院护士站系统
         </h2>
-        <van-form @submit="onSubmit">
+        <van-form @submit="onRegister">
           <van-cell-group inset>
             <van-field
+                v-model="registerData.USER_NAME"
+                name="userName"
+                label="姓名"
+                placeholder="请输入姓名"
+                :rules="[
+                    { required: true, message: '请输入正确中文姓名' },
+                    { pattern: /^(?:[\u4e00-\u9fa5·]{2,16})$/,message: '请输入正确中文姓名'}
+                    ]"
+            />
+            <van-field
                 v-model="registerData.USER_CODE"
-                type="USER_CODE"
-                name="USER_CODE"
+                name="userCode"
                 label="身份证号"
                 placeholder="输入身份证"
                 :rules="[
@@ -57,7 +66,7 @@
             />
             <van-field
                 v-model="registerData.USER_PHONE"
-                name="phone"
+                name="userPhone"
                 label="手机号"
                 placeholder="请输入手机号"
                 :rules="[
@@ -68,14 +77,14 @@
             <van-field
                 v-model="registerData.USER_PASSWORD"
                 type="password"
-                name="password"
+                name="userPassword"
                 label="密码"
                 placeholder="请输入密码"
                 :rules="[{ required: true, message: '请填写密码' }]"
             />
             <van-field
                 v-model="registerData.confirmPassword"
-                type="confirmPassword"
+                type="password"
                 name="confirmPassword"
                 label="确认密码"
                 placeholder="请确认密码"
@@ -84,7 +93,7 @@
                     { validator: confirmPassword,message: '两次密码不一致'}
                 ]"
             />
-            <van-field name="radio" label="性别" :rules="[{ required: true, message: '请选择性别' }]">
+            <van-field name="userGender" label="性别" :rules="[{ required: true, message: '请选择性别' }]">
               <template #input>
                 <van-radio-group v-model="registerData.USER_GENDER" direction="horizontal">
                   <van-radio name="0">女</van-radio>
@@ -114,28 +123,65 @@
 
 <script setup>
 import {reactive, ref} from "vue";
+import Request from "@/utils/Request.js"
 import cssVar from "/src/assets/style/globalVariables.module.scss"
+import {Toast} from "vant";
+import {useUserStore} from "@/stores/userStore.js";
+import router from "@/router/index.js";
 
-let loginPage = ref(true);
+//引入pinia实体
+const userStore = useUserStore();
+//登录表单：true  注册表单：false
+const loginPage = ref(true);
 
-//登录
+//登录-----------------------------------
 const username = ref('');
 const password = ref('');
 
-//注册
+/**登录*/
+const onSubmit = (values) => {
+  values.role = "0"  //0代表用户
+  Request.post('/user/login',values).then(res =>{
+    if (res.status === 200){
+      Toast("登录成功");
+      //初始化个人信息
+      userStore.initUser(res.data);
+      localStorage.setItem("NurseToken",res.data.userPassword);
+      router.back();
+    }else {
+      Toast.fail(res.msg);
+    }
+  })
+};
+
+
+//注册-----------------------------------
 const registerData = reactive({
   USER_CODE:"",
   USER_PHONE:"",
   USER_PASSWORD:"",
   confirmPassword:"",
-  USER_GENDER:""
+  USER_GENDER:"",
+  USER_NAME:""
 })
+/**验证密码是否一直*/
 const confirmPassword = (val) => {
   return val === registerData.USER_PASSWORD;
 }
-const onSubmit = (values) => {
-  console.log('submit', values);
-};
+/**注册*/
+const onRegister = (values) =>{
+  console.log(values)
+  Request.post("/user/register",values).then(res => {
+    if (res.status === 200){
+      Toast("注册成功，请登录！")
+      loginPage.value = true
+    }else {
+      Toast("注册失败"+res.msg)
+    }
+  })
+}
+
+
 </script>
 
 <style lang="scss" scoped>

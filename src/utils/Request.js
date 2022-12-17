@@ -3,9 +3,9 @@ import {Toast} from "vant";
 import router from "@/router/index.js";
 import {useUserStore} from "@/stores/userStore.js";
 
-const userStore = useUserStore();
 const Request = axios.create({
-    baseURL:'http://localhost:9090',
+    // baseURL:'http://localhost:9090',
+    baseURL:"http://192.168.101.3:9090",
     timeout:5000
 })
 
@@ -19,6 +19,8 @@ Request.interceptors.request.use(config => {
 })
 
 Request.interceptors.response.use(response => {
+        const userStore = useUserStore();
+
         let res = response.data;
         // 如果是返回的文件
         if (response.config.responseType === 'blob') {
