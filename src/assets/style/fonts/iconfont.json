@@ -6,6 +6,20 @@
   "description": "毕设，护士站管理系统",
   "glyphs": [
     {
+      "icon_id": "1727436",
+      "name": "211铃铛-线性",
+      "font_class": "xitong",
+      "unicode": "e8c0",
+      "unicode_decimal": 59584
+    },
+    {
+      "icon_id": "2674484",
+      "name": "收藏",
+      "font_class": "shoucang",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
       "icon_id": "16192683",
       "name": "医院",
       "font_class": "hospital",
@@ -60,76 +74,6 @@
       "font_class": "zhongyi1",
       "unicode": "e8d4",
       "unicode_decimal": 59604
-    },
-    {
-      "icon_id": "16198421",
-      "name": "医院",
-      "font_class": "yiyuan",
-      "unicode": "e91a",
-      "unicode_decimal": 59674
-    },
-    {
-      "icon_id": "16198494",
-      "name": "医生",
-      "font_class": "yisheng",
-      "unicode": "e91e",
-      "unicode_decimal": 59678
-    },
-    {
-      "icon_id": "16198544",
-      "name": "手术刀",
-      "font_class": "shoushudao",
-      "unicode": "e920",
-      "unicode_decimal": 59680
-    },
-    {
-      "icon_id": "16198665",
-      "name": "注射器",
-      "font_class": "zhusheqi",
-      "unicode": "e927",
-      "unicode_decimal": 59687
-    },
-    {
-      "icon_id": "16199013",
-      "name": "药丸",
-      "font_class": "yaowan",
-      "unicode": "e938",
-      "unicode_decimal": 59704
-    },
-    {
-      "icon_id": "16199873",
-      "name": "中医",
-      "font_class": "zhongyi",
-      "unicode": "e97f",
-      "unicode_decimal": 59775
-    },
-    {
-      "icon_id": "16198482",
-      "name": "病房",
-      "font_class": "bingfang",
-      "unicode": "e91b",
-      "unicode_decimal": 59675
-    },
-    {
-      "icon_id": "16198501",
-      "name": "护士",
-      "font_class": "hushi",
-      "unicode": "e91d",
-      "unicode_decimal": 59677
-    },
-    {
-      "icon_id": "16204059",
-      "name": "病房",
-      "font_class": "bingfang1",
-      "unicode": "e9c3",
-      "unicode_decimal": 59843
-    },
-    {
-      "icon_id": "16204062",
-      "name": "护士",
-      "font_class": "hushi1",
-      "unicode": "e9c5",
-      "unicode_decimal": 59845
     },
     {
       "icon_id": "7791978",

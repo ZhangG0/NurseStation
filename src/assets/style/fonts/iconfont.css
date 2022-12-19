@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 3633800 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1669557590373') format('woff2'),
-       url('iconfont.woff?t=1669557590373') format('woff'),
-       url('iconfont.ttf?t=1669557590373') format('truetype');
+       url('iconfont.woff2?t=1671379771380') format('woff2'),
+       url('iconfont.woff?t=1671379771380') format('woff'),
+       url('iconfont.ttf?t=1671379771380') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-xitong:before {
+  content: "\e8c0";
+}
+
+.icon-shoucang:before {
+  content: "\e627";
 }
 
 .icon-hospital:before {
@@ -45,46 +53,6 @@
 
 .icon-zhongyi1:before {
   content: "\e8d4";
-}
-
-.icon-yiyuan:before {
-  content: "\e91a";
-}
-
-.icon-yisheng:before {
-  content: "\e91e";
-}
-
-.icon-shoushudao:before {
-  content: "\e920";
-}
-
-.icon-zhusheqi:before {
-  content: "\e927";
-}
-
-.icon-yaowan:before {
-  content: "\e938";
-}
-
-.icon-zhongyi:before {
-  content: "\e97f";
-}
-
-.icon-bingfang:before {
-  content: "\e91b";
-}
-
-.icon-hushi:before {
-  content: "\e91d";
-}
-
-.icon-bingfang1:before {
-  content: "\e9c3";
-}
-
-.icon-hushi1:before {
-  content: "\e9c5";
 }
 
 .icon-ziyuanxhdpi:before {
