@@ -27,7 +27,7 @@
           </van-cell-group>
           <span class="subText" @click="loginPage = false">没有账号？请点击注册</span>
           <div style="margin: 16px;">
-            <van-button :color="cssVar.ThemeGreen" block native-type="submit">
+            <van-button :loading="loggingIn" :color="cssVar.ThemeGreen" block native-type="submit">
               登录
             </van-button>
           </div>
@@ -133,6 +133,7 @@ import router from "@/router/index.js";
 const userStore = useUserStore();
 //登录表单：true  注册表单：false
 const loginPage = ref(true);
+const loggingIn = ref(false);
 
 //登录-----------------------------------
 const username = ref('');
@@ -140,6 +141,7 @@ const password = ref('');
 
 /**登录*/
 const onSubmit = (values) => {
+  loggingIn.value = true;
   values.role = "0"  //0代表用户
   Request.post('/user/login',values).then(res =>{
     if (res.status === 200){
@@ -151,6 +153,7 @@ const onSubmit = (values) => {
     }else {
       Toast.fail(res.msg);
     }
+    loggingIn.value = false;
   })
 };
 
@@ -170,7 +173,7 @@ const confirmPassword = (val) => {
 }
 /**注册*/
 const onRegister = (values) =>{
-  console.log(values)
+  loggingIn.value = true;
   Request.post("/user/register",values).then(res => {
     if (res.status === 200){
       Toast("注册成功，请登录！")
@@ -178,6 +181,8 @@ const onRegister = (values) =>{
     }else {
       Toast("注册失败"+res.msg)
     }
+
+    loggingIn.value = false;
   })
 }
 
