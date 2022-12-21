@@ -1,5 +1,8 @@
 <template>
   <div class="background_div flexCenter">
+    <van-sticky>
+      <van-nav-bar title="消息" style="width: 100vw;" />
+    </van-sticky>
     <el-card class="message">
       <div class="collection Msg">
         <span class="icon iconfont icon-shoucang"></span>
@@ -65,7 +68,7 @@ const mock = [
 @import "@/assets/style/globalVariables.module.scss";
 
 .message{
-  margin-top: 10px;
+  margin-top: -10px;
   width: 100%;
   display: flex;
   flex-flow: row nowrap;

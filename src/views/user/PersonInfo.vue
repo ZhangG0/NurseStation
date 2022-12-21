@@ -1,5 +1,8 @@
 <template>
 <div class="background_div">
+  <van-sticky>
+    <van-nav-bar title="个人信息" style="width: 100vw;" />
+  </van-sticky>
   <el-card style="width: 100%">
     <van-cell-group
         style="margin: 0;"
