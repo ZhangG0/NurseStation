@@ -1,6 +1,6 @@
 <template>
 <div class="background_div">
-  <el-card class="flexAllCenter" style="width: 100%">
+  <el-card style="width: 100%">
     <van-cell-group
         style="margin: 0;"
         inset
@@ -11,6 +11,7 @@
           size="large">
         <template #right-icon>
           <van-uploader
+              :after-read="afterRead"
               :max-size="2 * 1000 * 1024"
               :max-count="1"
               >
@@ -18,45 +19,75 @@
                 round
                 width="60px"
                 height="60px"
-                :src="personInfo.USER_AVATAR_URL?personInfo.USER_AVATAR_URL:'src/assets/img/defaultAvatar.png'"
+                :src="personInfo.value.userAvatarUrl?personInfo.value.userAvatarUrl:'src/assets/img/defaultAvatar.png'"
             />
           </van-uploader>
 
         </template>
       </van-cell>
-      <van-cell title="编号" size="large" :value="personInfo.USER_CODE"/>
-      <van-cell title="姓名" size="large" :value="personInfo.USER_NAME"/>
-      <van-cell title="性别" size="large" :value="personInfo.USER_GENDER === 0?'女':'男'"/>
-      <van-cell title="年龄" size="large" :value="personInfo.USER_AGE"/>
-      <van-cell title="生日" size="large" :value="personInfo.USER_BIRTHDAY"/>
-      <van-cell title="病区号" size="large" :value="personInfo.USER_AREA"/>
-      <van-cell title="病房号" size="large" :value="personInfo.USER_ROOM_CODE"/>
-      <van-cell title="病床号" size="large" :value="personInfo.USER_BED_ROOM"/>
-      <van-cell title="责任护士" size="large" :value="personInfo.USER_NURSE"/>
+      <van-cell title="编号" size="large" :value="userStore.getIdCode"/>
+      <van-cell title="手机号" size="large" :value="userStore.getPhone"/>
+      <van-cell title="姓名" size="large" :value="personInfo.value.userName"/>
+      <van-cell title="性别" size="large" :value="personInfo.value.userGender === 0?'女':'男'"/>
+      <van-cell title="年龄" size="large" :value="personInfo.value.userAge"/>
+      <van-cell title="生日" size="large" :value="personInfo.value.userBirthday"/>
+      <van-cell title="病区号" size="large" :value="personInfo.value.userAreaCode"/>
+      <van-cell title="病房号" size="large" :value="personInfo.value.userRoomCode"/>
+      <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
+      <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
     </van-cell-group>
-  </el-card>
 
+    <el-button type="info" @click="text">按钮</el-button>
+  </el-card>
 </div>
 </template>
 
 <script setup>
-import {reactive} from "vue";
+import {useUserStore} from "@/stores/userStore.js";
+import {onMounted, reactive} from "vue";
+import Request from "@/utils/Request.js";
+import {getFormData} from "@/utils/ZhangG0CommonUtils.js";
+import {Toast} from "vant";
 
-const personInfo = reactive({
-  USER_AVATAR_URL:"",
-  USER_NAME:"小江同学",
-  USER_AGE:0,
-  USER_BIRTHDAY:"1999-07-02",
-  USER_CODE:"0000010001",
-  USER_GENDER:0,
-  USER_AREA:"A",
-  USER_ROOM_CODE:"508",
-  USER_BED_ROOM:"02",
-  USER_NURSE:"小傅医生"
+const userStore = useUserStore();
+const personInfo = reactive({value:{}});
+
+const text = () =>{
+  console.log(personInfo.value.userName);
+  personInfo.value.userName = "改名啦！"
+  console.log(personInfo.value);
+}
+
+onMounted(() => {
+  personInfo.value = userStore.userData;
+  console.log();
 })
+const afterRead = (file) => {
+  // 此时可以自行将文件上传至服务器
+  console.log(file.file)
+  const formData = getFormData({userCode: userStore.userData.userCode});
+  formData.append("avatarImg",file.file,file.file.name)
+
+  Request.post("/user/avatarChange",formData,{
+    headers: {'Content-Type': 'multipart/form-data'},
+    timeout: 20000
+  }).then(res => {
+    if (res.status === 200){
+      personInfo.value.userAvatarUrl = res.data.userAvatarUrl;
+      personInfo.value.userAvatarName = res.data.userAvatarName;
+      Toast("修改头像成功");
+    }else {
+      Toast.fail("头像修改失败，请重试");
+    }
+  })
+  console.log(file);
+};
+
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.background_div{
 
+}
 </style>
