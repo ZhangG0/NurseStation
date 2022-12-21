@@ -12,6 +12,7 @@
         <template #right-icon>
           <van-uploader
               :after-read="afterRead"
+              @oversize="oversize"
               :max-size="2 * 1000 * 1024"
               :max-count="1"
               >
@@ -36,8 +37,6 @@
       <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
       <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
     </van-cell-group>
-
-    <el-button type="info" @click="text">按钮</el-button>
   </el-card>
 </div>
 </template>
@@ -52,16 +51,11 @@ import {Toast} from "vant";
 const userStore = useUserStore();
 const personInfo = reactive({value:{}});
 
-const text = () =>{
-  console.log(personInfo.value.userName);
-  personInfo.value.userName = "改名啦！"
-  console.log(personInfo.value);
-}
-
 onMounted(() => {
   personInfo.value = userStore.userData;
   console.log();
 })
+/**上传*/
 const afterRead = (file) => {
   // 此时可以自行将文件上传至服务器
   console.log(file.file)
@@ -82,8 +76,10 @@ const afterRead = (file) => {
   })
   console.log(file);
 };
-
-
+/**限制大小*/
+const oversize = () => {
+  Toast.fail("图片不能大于2MB")
+}
 </script>
 
 <style scoped lang="scss">
