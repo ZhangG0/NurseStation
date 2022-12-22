@@ -1,47 +1,47 @@
 <template>
-<div class="background_div">
-  <van-sticky>
-    <van-nav-bar title="个人信息" style="width: 100vw;" />
-  </van-sticky>
-  <el-card style="width: 100%">
-    <van-cell-group
-        style="margin: 0;"
-        inset
-        class="content">
-      <van-cell
-          title="头像"
-          center
-          size="large">
-        <template #right-icon>
-          <van-uploader
-              :after-read="afterRead"
-              @oversize="oversize"
-              :max-size="2 * 1000 * 1024"
-              :max-count="1"
-              >
-            <van-image
-                round
-                width="60px"
-                height="60px"
-                :src="personInfo.value.userAvatarUrl?personInfo.value.userAvatarUrl:'src/assets/img/defaultAvatar.png'"
-            />
-          </van-uploader>
+  <div class="background_div">
+    <van-sticky>
+      <van-nav-bar title="个人信息" style="margin-left: -10px;width: 100vw;"/>
+    </van-sticky>
+    <el-card style="width: 100%">
+      <van-cell-group
+          style="margin: 0;"
+          inset
+          class="content">
+        <van-cell
+            title="头像"
+            center
+            size="large">
+          <template #right-icon>
+            <van-uploader
+                :after-read="afterRead"
+                @oversize="oversize"
+                :max-size="2 * 1000 * 1024"
+                :max-count="1"
+            >
+              <van-image
+                  round
+                  width="60px"
+                  height="60px"
+                  :src="personInfo.value.userAvatarUrl?personInfo.value.userAvatarUrl:'src/assets/img/defaultAvatar.png'"
+              />
+            </van-uploader>
 
-        </template>
-      </van-cell>
-      <van-cell title="编号" size="large" :value="userStore.getIdCode"/>
-      <van-cell title="手机号" size="large" :value="userStore.getPhone"/>
-      <van-cell title="姓名" size="large" :value="personInfo.value.userName"/>
-      <van-cell title="性别" size="large" :value="personInfo.value.userGender === 0?'女':'男'"/>
-      <van-cell title="年龄" size="large" :value="personInfo.value.userAge"/>
-      <van-cell title="生日" size="large" :value="personInfo.value.userBirthday"/>
-      <van-cell title="病区号" size="large" :value="personInfo.value.userAreaCode"/>
-      <van-cell title="病房号" size="large" :value="personInfo.value.userRoomCode"/>
-      <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
-      <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
-    </van-cell-group>
-  </el-card>
-</div>
+          </template>
+        </van-cell>
+        <van-cell title="编号" size="large" :value="userStore.getIdCode"/>
+        <van-cell title="手机号" size="large" :value="userStore.getPhone"/>
+        <van-cell title="姓名" size="large" :value="personInfo.value.userName"/>
+        <van-cell title="性别" size="large" :value="personInfo.value.userGender === 0?'女':'男'"/>
+        <van-cell title="年龄" size="large" :value="personInfo.value.userAge"/>
+        <van-cell title="生日" size="large" :value="personInfo.value.userBirthday"/>
+        <van-cell title="病区号" size="large" :value="personInfo.value.userAreaCode"/>
+        <van-cell title="病房号" size="large" :value="personInfo.value.userRoomCode"/>
+        <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
+        <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
+      </van-cell-group>
+    </el-card>
+  </div>
 </template>
 
 <script setup>
@@ -52,7 +52,7 @@ import {getFormData} from "@/utils/ZhangG0CommonUtils.js";
 import {Toast} from "vant";
 
 const userStore = useUserStore();
-const personInfo = reactive({value:{}});
+const personInfo = reactive({value: {}});
 
 onMounted(() => {
   personInfo.value = userStore.userData;
@@ -63,17 +63,17 @@ const afterRead = (file) => {
   // 此时可以自行将文件上传至服务器
   console.log(file.file)
   const formData = getFormData({userCode: userStore.userData.userCode});
-  formData.append("avatarImg",file.file,file.file.name)
+  formData.append("avatarImg", file.file, file.file.name)
 
-  Request.post("/user/avatarChange",formData,{
+  Request.post("/user/avatarChange", formData, {
     headers: {'Content-Type': 'multipart/form-data'},
     timeout: 20000
   }).then(res => {
-    if (res.status === 200){
+    if (res.status === 200) {
       personInfo.value.userAvatarUrl = res.data.userAvatarUrl;
       personInfo.value.userAvatarName = res.data.userAvatarName;
       Toast("修改头像成功");
-    }else {
+    } else {
       Toast.fail("头像修改失败，请重试");
     }
   })
@@ -85,8 +85,8 @@ const oversize = () => {
 }
 </script>
 
-<style scoped lang="scss">
-.background_div{
+<style lang="scss" scoped>
+.background_div {
 
 }
 </style>
