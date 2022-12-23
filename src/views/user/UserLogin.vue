@@ -104,7 +104,7 @@
 
           </van-cell-group>
           <div style="margin: 16px;">
-            <van-button :color="cssVar.DarkThemeGreen" block native-type="submit">
+            <van-button :loading="registering" :color="cssVar.DarkThemeGreen" block native-type="submit">
               注册
             </van-button>
           </div>
@@ -153,6 +153,7 @@ const onSubmit = (values) => {
     }else {
       Toast.fail(res.msg);
     }
+  }).finally(() => {
     loggingIn.value = false;
   })
 };
@@ -167,22 +168,27 @@ const registerData = reactive({
   USER_GENDER:"",
   USER_NAME:""
 })
+const registering = ref(false)
 /**验证密码是否一直*/
 const confirmPassword = (val) => {
   return val === registerData.USER_PASSWORD;
 }
 /**注册*/
 const onRegister = (values) =>{
-  loggingIn.value = true;
+  registering.value = true;
   Request.post("/user/register",values).then(res => {
     if (res.status === 200){
       Toast("注册成功，请登录！")
-      loginPage.value = true
+      for (const resKey in registerData) {
+        registerData[resKey] = "";
+      }
     }else {
       Toast("注册失败"+res.msg)
     }
 
-    loggingIn.value = false;
+  }).finally(() => {
+    registering.value = false;
+
   })
 }
 
