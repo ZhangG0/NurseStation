@@ -105,3 +105,7 @@ export function getFormData(object) {
     })
     return formData
 }
+
+export function getObjLength(object){
+    return Object.keys(object).length;
+}
