@@ -11,6 +11,7 @@ import 'element-plus/dist/index.css'
 import './assets/style/fonts/iconfont.css'
 //引入vant
 import 'vant/es/toast/style';
+import 'vant/es/dialog/style';
 
 import App from './App.vue'
 import router from './router'
