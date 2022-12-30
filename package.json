@@ -14,6 +14,7 @@
     "element-plus": "^2.2.16",
     "pinia": "^2.0.21",
     "pinia-plugin-persistedstate": "^3.0.1",
+    "smoothscroll-polyfill": "^0.4.4",
     "unplugin-vue-components": "^0.22.9",
     "vant": "^3.6.5",
     "vue": "^3.2.38",
