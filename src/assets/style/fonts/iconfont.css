@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 3633800 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1671609535055') format('woff2'),
-       url('iconfont.woff?t=1671609535055') format('woff'),
-       url('iconfont.ttf?t=1671609535055') format('truetype');
+       url('iconfont.woff2?t=1672995327624') format('woff2'),
+       url('iconfont.woff?t=1672995327624') format('woff'),
+       url('iconfont.ttf?t=1672995327624') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wenhao:before {
+  content: "\e8c8";
 }
 
 .icon-dianzan:before {
