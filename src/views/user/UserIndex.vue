@@ -11,65 +11,83 @@
             :size="140"
             :stroke-width="80"
             :text="text"
+            :speed="120"
         />
       </div>
       <div class="nextTreatTime flexCenter">
-        <h4 class="TitleText">据下次治疗时间还剩下</h4>
-        <van-count-down :time="3*60*60*1000" @finish="onFinish">
-          <template #default="timeData">
-            <span class="block">{{ timeData.hours }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.minutes }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.seconds }}</span>
-          </template>
-        </van-count-down>
+        <div v-if="countDown">
+          <h4 class="TitleText">据下次治疗时间还剩下</h4>
+          <van-count-down  :time="countDown" @finish="onFinish">
+            <template #default="timeData">
+              <span class="block">{{ timeData.hours?timeData.hours:'-' }}</span>
+              <span class="colon">:</span>
+              <span class="block">{{ timeData.minutes?timeData.minutes:'-' }}</span>
+              <span class="colon">:</span>
+              <span class="block">{{ timeData.seconds?timeData.seconds:'-' }}</span>
+            </template>
+          </van-count-down>
+        </div>
+
+        <div class="text" v-else-if="!dtStatusNum.timeoutNum">今日治疗已全部完成</div>
+        <div class="text" v-else>今日已超时任务：<span style="color:#EE0A24;">{{dtStatusNum.timeoutNum}}个</span></div>
       </div>
 
       <div class="detailInfo">
+
         <van-collapse v-model="activeNames">
-          <van-collapse-item
-              title=" "
-              size="large"
-              value="详细治疗信息"
-              name="detailInfo">
-            <el-descriptions title="治疗档案" :column="2">
-              <template #extra>
-                <el-tag type="success">已完成</el-tag>
+          <van-badge
+              style="width: 100%"
+              :content="dtStatusNum.timeoutNum"
+              :offset="[-44,14]"
+              :show-zero="false">
+            <van-collapse-item
+                title=""
+                size="large"
+                value="详细治疗信息"
+                name="detailInfo">
+              <template #value>
+                <div style="margin-right: 10px">详细治疗信息</div>
               </template>
-              <el-descriptions-item label="患者名称" :span="2">{{userStore.userData.userName}}</el-descriptions-item>
-              <el-descriptions-item label="患者编号" :span="2">{{userStore.userData.userCode}}</el-descriptions-item>
-              <el-descriptions-item label="治疗方式">药物治疗</el-descriptions-item>
-              <el-descriptions-item label="治疗时间">11: 00</el-descriptions-item>
-              <el-descriptions-item label="责任护士" :span="2">张翠花</el-descriptions-item>
-              <el-descriptions-item label="医嘱详情" :span="2">饭后，阿莫西林胶囊，2片，一天三次</el-descriptions-item>
-            </el-descriptions>
+              <template v-for="(item,index) in dailyTasks.value">
+                <el-descriptions
+                    :key="index"
+                    v-if="dailyTasks.value.length !== 0"
+                    :column="2">
+                  <template #title>
+                    <span class="title">治疗档案</span>
+                    <el-tooltip
+                        placement="right"
+                    >
+                      <template #content>
+                        <div style="max-width: 180px">
+                          该治疗时间为任务分发系统自动生成的建议时间，具体时间可遵照医生建议提前或延迟进行治疗。
+                        </div>
+                      </template>
+                      <span class="iconfont icon-wenhao"/>
+                    </el-tooltip>
+                  </template>
+                  <template #extra>
+                    <el-tag
+                        @click="changeDtStatus(item.dtCode,index,item.dtStatus,item.dtDetail)"
+                        :type="getStatusType(item.dtStatus)">
+                      {{getStatusText(item.dtStatus)}}
+                    </el-tag>
+                  </template>
+                  <el-descriptions-item label="患者名称" :span="2">{{userStore.userData.userName}}</el-descriptions-item>
+                  <!--                <el-descriptions-item label="患者编号" :span="2">{{userStore.userData.userCode}}</el-descriptions-item>-->
+                  <el-descriptions-item label="治疗方式" :span="2">{{item.treatType}}</el-descriptions-item>
+                  <el-descriptions-item label="治疗时间">{{item.dtTime}}</el-descriptions-item>
+                  <el-descriptions-item label="责任护士" >{{userStore.userData.userNurse}}</el-descriptions-item>
+                  <el-descriptions-item label="医嘱详情" :span="2">{{item.dtDetail}}</el-descriptions-item>
+                </el-descriptions>
 
-            <el-descriptions title="治疗档案" :column="2">
-              <template #extra>
-                <el-tag type="danger">已超时</el-tag>
               </template>
-              <el-descriptions-item label="患者名称" >张三</el-descriptions-item>
-              <el-descriptions-item label="患者编号">00000001</el-descriptions-item>
-              <el-descriptions-item label="治疗方式">注射治疗</el-descriptions-item>
-              <el-descriptions-item label="治疗时间">13: 00</el-descriptions-item>
-              <el-descriptions-item label="责任护士" :span="2">张翠花</el-descriptions-item>
-              <el-descriptions-item label="医嘱详情" :span="2">屁股针一次</el-descriptions-item>
-            </el-descriptions>
+              <el-empty v-if="dailyTasks.value.length === 0" :image-size="60" description="暂无治疗任务" />
 
-            <el-descriptions title="治疗档案" :column="2">
-              <template #extra>
-                <el-tag type="warning">未完成</el-tag>
-              </template>
-              <el-descriptions-item label="患者名称" >张三</el-descriptions-item>
-              <el-descriptions-item label="患者编号">00000001</el-descriptions-item>
-              <el-descriptions-item label="治疗方式">注射治疗</el-descriptions-item>
-              <el-descriptions-item label="治疗时间">16: 00</el-descriptions-item>
-              <el-descriptions-item label="责任护士" :span="2">张翠花</el-descriptions-item>
-              <el-descriptions-item label="医嘱详情" :span="2">屁股针一次</el-descriptions-item>
-            </el-descriptions>
+            </van-collapse-item>
+          </van-badge>
 
-          </van-collapse-item>
+
         </van-collapse>
 
       </div>
@@ -102,7 +120,6 @@
                   span="2"
               >{{item.text}}</el-descriptions-item>
             </el-descriptions>
-
             <!-- 无数据内容-->
             <el-empty v-else :image-size="60" description="暂无数据" />
 
@@ -142,6 +159,7 @@
 <script setup>
 import {computed, reactive, ref} from "vue";
 import gridInfo from './UserIndexGridInfo.json'
+import cssVar from "/src/assets/style/globalVariables.module.scss"
 import {Dialog, Toast} from "vant";
 import {useUserStore} from "@/stores/userStore.js";
 import Request from "@/utils/Request.js";
@@ -149,8 +167,105 @@ import {getObjLength} from "@/utils/ZhangG0CommonUtils.js";
 import {SlidingTab} from "@/components/index.js";
 const VanDialog = Dialog.Component;
 
+const userStore = useUserStore();
+
+/**每日任务-详细治疗信息模块*/
+const activeNames = ref(['0']);
+const dailyTasks = reactive({value:[]});
+const dtStatusNum = computed(() => {
+  let finishNum = 0;
+  let timeoutNum = 0;
+  dailyTasks.value.forEach( item => {
+    if (item.dtStatus === "1"){
+      //计算完成的有几个
+      finishNum++;
+    }else if (item.dtStatus === "-1"){
+      timeoutNum++
+    }
+  })
+
+  return {
+    finishNum:finishNum,
+    timeoutNum:timeoutNum
+  };
+})
+const getStatusText = (statusNum) => {
+  let text;
+  switch (statusNum) {
+    case "0":
+      text = "未完成";
+      break;
+    case "1":
+      text = "已完成";
+      break;
+    case "-1":
+      text = "已超时";
+  }
+
+  return text;
+}
+const getStatusType = (statusNum) => {
+  let type;
+  switch (statusNum) {
+    case "0":
+      type = "warning";
+      break;
+    case "1":
+      type = "success";
+      break;
+    case "-1":
+      type = "danger"
+  }
+
+  return type;
+}
+  /**改变任务状态*/
+const changeDtStatus = (dtCode,index,dtStatus,detail) => {
+  if (dtStatus !== "1"){
+    Dialog.confirm({
+      title: '是否已经完成该项治疗？',
+      message: `${detail} \n 【请确认是否已完成该项药物治疗任务！】`,
+      confirmButtonColor: cssVar.DarkThemeGreen,
+      cancelButtonText: '未完成',
+      confirmButtonText: '已完成'
+    })
+        .then(() => {
+          dailyTasks.value[index].dtStatus = "1";
+          // on confirm
+          Request.post('/daily/changeStatus',{dtCode:dtCode}).then(res => {
+            if (res.status === 200){
+              dailyTasks.value[index].dtStatus = "1";
+            }else {
+              dailyTasks.value[index].dtStatus = dtStatus;
+              Toast.fail("确认失败！请重新确认！")
+            }
+          }).catch(() => {
+            dailyTasks.value[index].dtStatus = dtStatus;
+            Toast.fail("确认失败！请重新确认！")
+          })
+        })
+        .catch(() => {
+          // on cancel
+          Toast("请完成治疗后再确认！")
+        });
+  }else {
+    Toast("已完成任务，无需重复确认")
+  }
+}
+Request.post("/daily/getDailyTask",{userCode:userStore.userData.userCode}).then(res => {
+  if (res.status === 200){
+    dailyTasks.value = res.data;
+  }else {
+    Toast.fail("获取每日治疗详细信息失败");
+  }
+
+})
+/**END*/
+
 /**进度条模块*/
-const rate = ref(33.33);
+const rate = computed(() => {
+  return dailyTasks.value.length === 0?0:(dtStatusNum.value.finishNum/dailyTasks.value.length) * 100;
+})
 const currentRate = ref(0);
 const text = computed(() => currentRate.value.toFixed(2) + '%');
 const gradientColor = {
@@ -160,14 +275,59 @@ const gradientColor = {
 };
 /**END*/
 
-/**详细治疗信息模块*/
-const activeNames = ref(['0']);
-const userStore = useUserStore();
-/**END*/
-
 /**下一次用药倒计时模块*/
+  /**下一次用药倒计时时间*/
+const countDown = computed(() => {
+  let countDownTime;
+  for (let i = 0; i < dailyTasks.value.length; i++) {
+    if (dailyTasks.value[i].dtStatus === "0"){
+      const timeArr = dailyTasks.value[i].dtTime.split(":");
+      let date = new Date();
+      let now = new Date();
+      date.setHours(timeArr[0],timeArr[1]);
+      countDownTime = date - now;
+      break;
+    }
+  }
+
+  return countDownTime;
+})
+  /**倒计时结束时触发的Dialog*/
 const onFinish = () => {
-  Toast('倒计时结束');
+    for (let i = 0; i < dailyTasks.value.length; i++) {
+      if (dailyTasks.value[i].dtStatus === "0"){
+        Dialog.confirm({
+          title: '是否已经完成该项治疗？',
+          message: `${dailyTasks.value[i].dtDetail} \n 【请确认是否已完成该项药物治疗任务！】`,
+          confirmButtonColor: cssVar.DarkThemeGreen,
+          cancelButtonText: '未完成',
+          confirmButtonText: '已完成'
+        })
+            .then(() => {
+              // on confirm
+              Request.post('/daily/changeStatus',{dtCode:dailyTasks.value[i].dtCode}).then(res => {
+                if (res.status === 200){
+                  dailyTasks.value[i].dtStatus = "1";
+                }else {
+                  dailyTasks.value[i].dtStatus = "-1";
+                  Toast.fail("确认失败！请重新确认！")
+                }
+              }).catch(() => {
+                dailyTasks.value[i].dtStatus = "-1";
+                Toast.fail("确认失败！请重新确认！")
+              })
+            })
+            .catch(() => {
+              // on cancel
+              dailyTasks.value[i].dtStatus = "-1";
+              Toast("请完成治疗后再确认！")
+            });
+        break;
+
+      }
+      }
+
+
   console.log("结束");
 };
 /**END*/
@@ -193,10 +353,8 @@ Request.post("/order/getMyOrder",{userCode:userStore.userData.userCode}).then( r
         treat.other.push(obj);
       }
     }
-    console.log(myOrder);
-    console.log(treat);
   }else {
-    Toast.fail("请求异常！"+res.msg);
+    Toast.fail("请求个人医疗信息异常！"+res.msg);
   }
 })
 const show = ref(false);            //控制dialog
@@ -209,11 +367,7 @@ const dialogInfo = reactive({
   value: {
     title: "标题",
     info: [{}],
-    info2: [
-        [
-
-        ]
-    ]
+    info2: [[]]
   }
 });
   /**关闭时默认关闭居中,默认显示描述行*/
@@ -381,6 +535,7 @@ const openDialog = (text) => {
   }
 }
 /**END*/
+
 </script>
 
 <style lang="scss" scoped>
@@ -422,13 +577,30 @@ const openDialog = (text) => {
         text-align: center;
         background-color: $ThemeGreen;
       }
+
+      .text{
+        color: $grayColor;
+        font-size: 15px;
+      }
     }
 
     .detailInfo{
 
+      .title{
+        margin-right: 5px;
+      }
+
+      :deep(.el-empty){
+        padding: 0;
+      }
+
+      :deep(.el-descriptions__cell){
+        padding-bottom: 5px;
+      }
     }
 
   }
+
 
 
   .girdItem{
@@ -443,7 +615,7 @@ const openDialog = (text) => {
   }
 
   :deep(.van-button__text){
-    color: $ThemeGreen;
+    color: $DarkThemeGreen;
   }
 
   :deep(.van-dialog__header){
@@ -453,8 +625,6 @@ const openDialog = (text) => {
 
   .dialogBody{
     padding: 15px 30px;
-
-
 
     :deep(.el-descriptions__cell){
       padding-bottom: 5px;
