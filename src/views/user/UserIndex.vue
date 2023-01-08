@@ -68,7 +68,7 @@
                   </template>
                   <template #extra>
                     <el-tag
-                        @click="changeDtStatus(item.dtCode,index,item.dtStatus,item.dtDetail)"
+                        @click="changeDtStatus(item.dtCode,index,item.dtStatus,item.dtTime,item.dtDetail)"
                         :type="getStatusType(item.dtStatus)">
                       {{getStatusText(item.dtStatus)}}
                     </el-tag>
@@ -220,11 +220,11 @@ const getStatusType = (statusNum) => {
   return type;
 }
   /**改变任务状态*/
-const changeDtStatus = (dtCode,index,dtStatus,detail) => {
+const changeDtStatus = (dtCode,index,dtStatus,dtTime,detail) => {
   if (dtStatus !== "1"){
     Dialog.confirm({
       title: '是否已经完成该项治疗？',
-      message: `${detail} \n 【请确认是否已完成该项药物治疗任务！】`,
+      message: `【${dtTime}】${detail} \n 【请确认是否已完成该项药物治疗任务！】`,
       confirmButtonColor: cssVar.DarkThemeGreen,
       cancelButtonText: '未完成',
       confirmButtonText: '已完成'
@@ -298,7 +298,7 @@ const onFinish = () => {
       if (dailyTasks.value[i].dtStatus === "0"){
         Dialog.confirm({
           title: '是否已经完成该项治疗？',
-          message: `${dailyTasks.value[i].dtDetail} \n 【请确认是否已完成该项药物治疗任务！】`,
+          message: `【${dailyTasks.value[i].dtTime}】${dailyTasks.value[i].dtDetail}\n【请确认是否已完成该项药物治疗任务！】`,
           confirmButtonColor: cssVar.DarkThemeGreen,
           cancelButtonText: '未完成',
           confirmButtonText: '已完成'
