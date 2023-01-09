@@ -6,7 +6,7 @@
           width="50px"
           height="50px"
           round
-          src="src/assets/img/defaultAvatar.png"/>
+          :src="props.showData.userAvatarUrl?props.showData.userAvatarUrl:'src/assets/img/defaultAvatar.png'"/>
       <div class="name-title">
         <span class="name">{{props.showData.userName}}</span>
         <span class="title" v-if="props.showData.userTitle">{{props.showData.userTitle}}</span>
@@ -14,7 +14,7 @@
     </header>
     <!--    文字部分-->
     <article>
-      <h4>
+      <h4 style="margin-left: 0">
         {{props.showData.articleTitle}}
       </h4>
       <article>
@@ -23,21 +23,21 @@
     </article>
     <!--    时间戳-->
     <div class="time">
-      {{props.showData.lastTime}}
+      {{props.showData.releaseTime}}
     </div>
     <!--    尾部点赞评论收藏数量-->
     <footer>
       <div class="footerItem">
         <span class="iconfont icon-dianzan "></span>
-        <span>{{props.showData.info.like}}</span>
+        <span>{{props.showData.like}}</span>
       </div>
       <div class="footerItem">
         <span class="iconfont icon-xiaoxi"/>
-        <span>{{props.showData.info.comment}}</span>
+        <span>{{props.showData.comment}}</span>
       </div>
       <div class="footerItem">
         <span class="iconfont icon-xihuan" />
-        <span>{{props.showData.info.collection}}</span>
+        <span>{{props.showData.collection}}</span>
       </div>
     </footer>
 
@@ -56,13 +56,10 @@ const props = defineProps({
       userTitle:"骨科",
       articleTitle:"小儿发烧该如何治疗？",
       articleContent:"多半是装的，打一顿就好！怎么打呢？这个很简单我们首先拿起一个扫把，然后去往他的屁股上咚咚咚。多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！多半是装的，打一顿就好！",
-      lastTime:"2022年12月22日",
-      info:{
-        like:15,
-        comment:23,
-        collection:20
-      }
-
+      releaseTime:"2022年12月22日",
+      like:15,
+      comment:23,
+      collection:20
     })
   }
 })
