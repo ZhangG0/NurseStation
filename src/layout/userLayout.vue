@@ -4,8 +4,12 @@
       <router-view></router-view>
     </div>
 
-    <div style="margin-top: 50px">
-      <van-tabbar v-model="active" :active-color="$style['ThemeGreen']">
+    <div style="margin-top: 10px">
+      <van-tabbar
+          v-model="active"
+          placeholder
+          route
+          :active-color="$style['ThemeGreen']">
         <van-tabbar-item name="User-Today" to="/user/today">
           <span>今日医疗</span>
           <template #icon="">
