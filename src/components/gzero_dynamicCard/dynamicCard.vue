@@ -29,7 +29,7 @@
     <footer>
       <div class="footerItem">
         <span class="iconfont icon-dianzan "></span>
-        <span>{{props.showData.like}}</span>
+        <span>{{props.showData.likes}}</span>
       </div>
       <div class="footerItem">
         <span class="iconfont icon-xiaoxi"/>
