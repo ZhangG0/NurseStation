@@ -408,7 +408,7 @@ const openDialog = (text) => {
   dialogInfo.value.title = text;
   switch (text) {
     case "我的医生":
-      createObj(getObjLength(myOrder.doctor)-1);
+      createObj(getObjLength(myOrder.doctor)-3);
       dialogInfo.value.info[0].label = "医生编号";
       dialogInfo.value.info[0].text = myOrder.doctor.doctorCode;
       dialogInfo.value.info[1].label = "医生姓名";
@@ -423,7 +423,7 @@ const openDialog = (text) => {
       dialogInfo.value.info[5].text = myOrder.doctor.professionalExperience;
       break;
     case "我的护士":
-      createObj(getObjLength(myOrder.nurse)-1);
+      createObj(getObjLength(myOrder.nurse)-3);
       dialogInfo.value.info[0].label = "护士编号";
       dialogInfo.value.info[0].text = myOrder.nurse.nurseCode;
       dialogInfo.value.info[1].label = "护士姓名";
