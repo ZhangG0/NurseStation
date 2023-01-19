@@ -15,11 +15,10 @@
 <script setup>
 import {ref} from 'vue'
 
-const onClickLeft = () => history.back();
+const onClickLeft = () => history.go(-1);
 const title = ref("");
 const setTitle = (theTitle) => {
   title.value = theTitle;
-  console.log(theTitle);
 }
 </script>
 
