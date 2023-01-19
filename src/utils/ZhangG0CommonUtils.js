@@ -106,6 +106,11 @@ export function getFormData(object) {
     return formData
 }
 
+/**
+ * 获得对象的长度
+ * @param object
+ * @return {number}
+ */
 export function getObjLength(object){
     return Object.keys(object).length;
 }
