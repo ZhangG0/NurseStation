@@ -23,9 +23,16 @@ const setTitle = (theTitle) => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/style/globalVariables.module.scss";
+
 .navBar{
   :deep(.van-icon){
     color: black;
   }
+
+  :deep(.van-nav-bar__content){
+    border-bottom: 2px solid $DarkThemeGreen;
+  }
 }
+
 </style>

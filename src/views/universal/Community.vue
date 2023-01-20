@@ -23,7 +23,8 @@
           title=""
           class="theBar">
         <template #right>
-          <el-button @click="addNewArticle" size="small">+</el-button>
+<!--          <el-button  size="small"></el-button>-->
+          <van-icon @click="addNewArticle" :color="cssVar.DarkThemeGreen" name="add-o" size="25px" />
         </template>
       </van-nav-bar>
 <!--      新增文章-->
@@ -63,16 +64,22 @@
       </van-dialog>
       <div class="theContent">
 <!--      论坛帖子-->
-        <van-pull-refresh v-model="loading" @refresh="onRefresh">
-          <div v-if="showData.value.length">
-            <DynamicCard
-                v-for="(item,index) in showData.value"
-                :showData="item"
-                :key="index"
-                @click="openArticle"/>
-          </div>
-          <van-empty v-else image="search" description="没有帖子呢" />
-        </van-pull-refresh>
+          <van-pull-refresh v-model="loading.pullRefresh" @refresh="onRefresh">
+            <van-skeleton v-for="(item,index) in [].length = 3" :key="item+index" style="padding: 20px 10px" title avatar :row="3" :loading="loading.skeleton"/>
+            <van-skeleton style="padding: 20px 10px" title avatar :row="3" :loading="loading.skeleton">
+              <div v-if="showData.value.length">
+                <DynamicCard
+                    v-for="(item,index) in showData.value"
+                    :showData="item"
+                    :key="index"
+                    @click="  router.push({name:'ArticleDetail',query: item})"/>
+              </div>
+              <van-empty style="min-height: 58vh" v-else image="search" description="没有帖子呢" />
+            </van-skeleton>
+
+
+          </van-pull-refresh>
+
 
 
       </div>
@@ -110,9 +117,8 @@ Request.get("/article/getArticle").then(res => {
   }else {
     Toast.fail(res.msg)
   }
-}).catch(() =>{
-  Toast.fail("请求异常！")
-});
+}).catch(() =>{Toast.fail("请求异常！")})
+    .finally(() =>{loading.skeleton = false;});
 const addNewArticle = () => {
   if (localStorage.getItem("NurseToken") && userStore.userData.userId === -1){
     Dialog.alert({
@@ -144,26 +150,23 @@ const submitArticle = () => {
   })
 }
 const showDialog = ref(false)
-  //下拉刷新
-const loading = ref(false);
+const loading = reactive({
+  skeleton:true,  //骨架屏
+  pullRefresh:false //下拉刷新
+})
 const onRefresh = () => {
   Request.get("/article/getArticle").then(res => {
     if (res.status === 200){
       showData.value = res.data;
-      loading.value = false;
       Toast("刷新成功");
     }else {
       Toast.fail(res.msg)
     }
   }).catch(() =>{
     Toast.fail("请求异常！")
-  });
+  }).finally(()=>{loading.pullRefresh = false;});
 
 };
-  /**打开文章*/
-const openArticle = () => {
-
-}
 /**End*/
 </script>
 
