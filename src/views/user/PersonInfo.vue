@@ -29,16 +29,28 @@
 
           </template>
         </van-cell>
-        <van-cell title="编号" size="large" :value="userStore.getIdCode"/>
-        <van-cell title="手机号" size="large" :value="userStore.getPhone"/>
-        <van-cell title="姓名" size="large" :value="personInfo.value.userName"/>
-        <van-cell title="性别" size="large" :value="personInfo.value.userGender === 0?'女':'男'"/>
-        <van-cell title="年龄" size="large" :value="personInfo.value.userAge"/>
-        <van-cell title="生日" size="large" :value="personInfo.value.userBirthday"/>
-        <van-cell title="病区号" size="large" :value="personInfo.value.userAreaCode"/>
-        <van-cell title="病房号" size="large" :value="personInfo.value.userRoomCode"/>
-        <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
-        <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
+        <div v-if="userStore.userData.userName">
+          <van-cell title="编号" size="large" :value="userStore.getIdCode || personInfo.value.nurseCode"/>
+          <van-cell title="手机号" size="large" :value="userStore.getPhone"/>
+          <van-cell title="姓名" size="large" :value="personInfo.value.userName || personInfo.value.nurseName"/>
+          <van-cell title="性别" size="large" :value="personInfo.value.userGender === 0?'女':'男'"/>
+          <van-cell title="年龄" size="large" :value="personInfo.value.userAge"/>
+          <van-cell title="生日" size="large" :value="personInfo.value.userBirthday"/>
+          <van-cell title="病区号" size="large" :value="personInfo.value.userAreaCode"/>
+          <van-cell title="病房号" size="large" :value="personInfo.value.userRoomCode"/>
+          <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
+          <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
+        </div>
+        <div v-else-if="userStore.userData.nurseName">
+          <van-cell title="编号" size="large" :value="userStore.getIdCode || personInfo.value.nurseCode"/>
+          <van-cell title="手机号" size="large" :value="userStore.getPhone"/>
+          <van-cell title="姓名" size="large" :value="personInfo.value.userName || personInfo.value.nurseName"/>
+          <van-cell title="职称" size="large" :value="personInfo.value.nurseTitle"/>
+          <van-cell title="所属科室" size="large" :value="personInfo.value.nurseDept"/>
+          <van-cell title="擅长领域" size="large" :value="personInfo.value.areasOfExpertise"/>
+          <van-cell title="执业经历" size="large" :value="personInfo.value.professionalExperience"/>
+        </div>
+
       </van-cell-group>
     </el-card>
   </div>
@@ -56,12 +68,10 @@ const personInfo = reactive({value: {}});
 
 onMounted(() => {
   personInfo.value = userStore.userData;
-  console.log();
 })
 /**上传*/
 const afterRead = (file) => {
   // 此时可以自行将文件上传至服务器
-  console.log(file.file)
   const formData = getFormData({userCode: userStore.userData.userCode});
   formData.append("avatarImg", file.file, file.file.name)
 
@@ -77,7 +87,6 @@ const afterRead = (file) => {
       Toast.fail("头像修改失败，请重试");
     }
   })
-  console.log(file);
 };
 /**限制大小*/
 const oversize = () => {

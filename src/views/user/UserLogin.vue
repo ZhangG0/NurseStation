@@ -24,6 +24,14 @@
                 placeholder="请输入密码"
                 :rules="[{ required: true, message: '请填写密码' }]"
             />
+            <van-field name="role" label="我是医护">
+              <template #input>
+                <van-radio-group v-model="roleCode" direction="horizontal">
+                  <van-radio name="1">护士</van-radio>
+                  <van-radio name="2">医生</van-radio>
+                </van-radio-group>
+              </template>
+            </van-field>
           </van-cell-group>
           <span class="subText" @click="loginPage = false">没有账号？请点击注册</span>
           <div style="margin: 16px;">
@@ -138,11 +146,12 @@ const loggingIn = ref(false);
 //登录-----------------------------------
 const username = ref('');
 const password = ref('');
+const roleCode = ref('0'); //默认为用户
 
 /**登录*/
 const onSubmit = (values) => {
   loggingIn.value = true;
-  values.role = "0"  //0代表用户
+  console.log(values)
   Request.post('/user/login',values).then(res =>{
     if (res.status === 200){
       Toast("登录成功");

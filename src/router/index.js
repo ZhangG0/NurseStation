@@ -97,7 +97,8 @@ router.beforeEach((to, from, next) => {
   //路由守卫，访问权限配置
   const userStore = useUserStore();
   if (to.meta.Authentication) { //需要登录才能进入
-    if (localStorage.getItem("NurseToken") && userStore.userData.userId !== -1) {
+        //确认存在token,且存在用户或护士的code
+    if (localStorage.getItem("NurseToken") && (userStore.userData.userId !== -1 || userStore.userData.nurseCode)) {
       /** 判断是否为歌手*/
       if (to.meta.SingerOnly) {
         if (userStore.userData.role !== 0) {

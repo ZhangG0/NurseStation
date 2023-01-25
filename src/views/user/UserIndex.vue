@@ -73,12 +73,12 @@
                       {{getStatusText(item.dtStatus)}}
                     </el-tag>
                   </template>
-                  <el-descriptions-item label="患者名称" :span="2">{{userStore.userData.userName}}</el-descriptions-item>
+                  <el-descriptions-item label="患者名称" :span="2">{{item.userName??userStore.userData.userName}}</el-descriptions-item>
                   <!--                <el-descriptions-item label="患者编号" :span="2">{{userStore.userData.userCode}}</el-descriptions-item>-->
                   <el-descriptions-item label="治疗方式" :span="2">{{item.treatType}}</el-descriptions-item>
                   <el-descriptions-item label="治疗时间">{{item.dtTime}}</el-descriptions-item>
-                  <el-descriptions-item label="责任护士" >{{userStore.userData.userNurse}}</el-descriptions-item>
-                  <el-descriptions-item label="医嘱详情" :span="2">{{item.dtDetail}}</el-descriptions-item>
+                  <el-descriptions-item label="责任护士" >{{userStore.userData.userNurse??userStore.userData.nurseName}}</el-descriptions-item>
+                  <el-descriptions-item v-if="!userStore.userData.nurseCode" label="医嘱详情" :span="2">{{item.dtDetail}}</el-descriptions-item>
                 </el-descriptions>
 
               </template>
@@ -92,7 +92,7 @@
 
       </div>
     </el-card>
-    <el-card>
+    <el-card v-if="userStore.userData.userCode > 0">
       <van-grid :gutter="5" column-num="2">
         <van-grid-item
             v-for="value in gridInfo"
@@ -151,7 +151,6 @@
 
         </van-dialog>
       </van-grid>
-
     </el-card>
   </div>
 </template>
@@ -170,7 +169,7 @@ const VanDialog = Dialog.Component;
 const userStore = useUserStore();
 
 /**每日任务-详细治疗信息模块*/
-const activeNames = ref(['0']);
+const activeNames = ref([userStore.userData.userCode<0?'detailInfo':'0']);
 const dailyTasks = reactive({value:[]});
 const dtStatusNum = computed(() => {
   let finishNum = 0;
@@ -221,10 +220,15 @@ const getStatusType = (statusNum) => {
 }
   /**改变任务状态*/
 const changeDtStatus = (dtCode,index,dtStatus,dtTime,detail) => {
+    console.log(detail);
+    console.log(userStore.userData.nurseCode)
+  if (detail === "日常查房" && userStore.userData.userCode>0 && dtStatus !== "0"){
+    return Toast(`若已完成${detail}请联系责任护士更改`);
+  }
   if (dtStatus !== "1"){
     Dialog.confirm({
       title: '是否已经完成该项治疗？',
-      message: `【${dtTime}】${detail} \n 【请确认是否已完成该项药物治疗任务！】`,
+      message: `【${dtTime}】${detail} \n 【请确认是否已完成该项治疗任务！】`,
       confirmButtonColor: cssVar.DarkThemeGreen,
       cancelButtonText: '未完成',
       confirmButtonText: '已完成'
@@ -252,7 +256,7 @@ const changeDtStatus = (dtCode,index,dtStatus,dtTime,detail) => {
     Toast("已完成任务，无需重复确认")
   }
 }
-Request.post("/daily/getDailyTask",{userCode:userStore.userData.userCode}).then(res => {
+Request.post("/daily/getDailyTask",{userCode:userStore.userData.userCode !== -1?userStore.userData.userCode:userStore.userData.nurseCode}).then(res => {
   if (res.status === 200){
     dailyTasks.value = res.data;
   }else {
@@ -343,20 +347,24 @@ const treat = {
   medicine:[],
   other:[],
 }
-Request.post("/order/getMyOrder",{userCode:userStore.userData.userCode}).then( res => {
-  if (res.status === 200){
-    myOrder = res.data;
-    for (const obj of myOrder.treatList) {
-      if (obj.treatType.includes("口服/外用")){
-        treat.medicine.push(obj);
-      }else {
-        treat.other.push(obj);
+  //如果登录态是用户则返回医嘱
+if (userStore.userData.userCode > 0){
+  Request.post("/order/getMyOrder",{userCode:userStore.userData.userCode}).then( res => {
+    if (res.status === 200){
+      myOrder = res.data;
+      for (const obj of myOrder.treatList) {
+        if (obj.treatType.includes("口服/外用")){
+          treat.medicine.push(obj);
+        }else {
+          treat.other.push(obj);
+        }
       }
+    }else {
+      Toast.fail("请求个人医疗信息异常！"+res.msg);
     }
-  }else {
-    Toast.fail("请求个人医疗信息异常！"+res.msg);
-  }
-})
+  })
+
+}
 const show = ref(false);            //控制dialog
 const show2 = ref(false);
 const showSlidingTab = ref(false);
@@ -366,8 +374,8 @@ const isInfoCenter = ref(false);    //控制是否居中
 const dialogInfo = reactive({
   value: {
     title: "标题",
-    info: [{}],
-    info2: [[]]
+    info: [{}],  //用于一般介绍
+    info2: [[]]  //用于一个grid内有多个信息的
   }
 });
   /**关闭时默认关闭居中,默认显示描述行*/
@@ -404,6 +412,7 @@ const createArr = (arrLoopTime,type,objLoopTime = 6) => {
     }
   }
 }
+  //grid的dialog的信息动态赋值
 const openDialog = (text) => {
   dialogInfo.value.title = text;
   switch (text) {
