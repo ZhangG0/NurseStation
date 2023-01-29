@@ -57,6 +57,7 @@
 <script>
 import {reactive} from "vue";
 import Request from "../../utils/Request";
+import {useUserStore} from "@/stores/userStore.js";
 
 export default {
   name:"AdminLogin",
@@ -104,14 +105,15 @@ export default {
           Request.post('/admin/login',this.formData).then( res => {
             if (res.status === 200){
               let data = res.data
-              window.localStorage.setItem("token",data.token);
+              window.localStorage.setItem("NurseToken",data.token);
+              useUserStore().userData.role = 100;
               this.$message({
                 type:'success',
                 message:'登陆成功,'+res.msg,
                 center: true,
                 duration:1000
               })
-              this.$router.push('/adminHome');
+              this.$router.push('/admin');
             }else {
               this.$message({
                 type:'error',
@@ -120,8 +122,7 @@ export default {
                 duration:1000
               })
             }
-          }).catch((err) => {
-            console.log(err);
+          }).catch(() => {
             this.$message({
               type:'error',
               message:'网络异常'
@@ -135,6 +136,8 @@ export default {
 
 }
 </script>
+
+
 
 <style lang="scss" scoped>
 .container{

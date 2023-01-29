@@ -75,13 +75,18 @@ const routes = [
     component: view.AdminLogin
   },
   {
-    path:'/adminHome',
+    path:'/admin',
     component: layout.adminLayout,
+    name:'admin',
+    meta:{
+      Authentication:true,
+      AdminOnly:true,
+    },
     children:[
       {
         path:'/adminHome',
         name:'adminHome',
-        component: view.AdminHome
+        component: view.AdminHome,
       }
     ]
   }
@@ -95,23 +100,23 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   //路由守卫，访问权限配置
-  const userStore = useUserStore();
+  const userData = useUserStore().userData;
   if (to.meta.Authentication) { //需要登录才能进入
         //确认存在token,且存在用户或护士的code
-    if (localStorage.getItem("NurseToken") && (userStore.userData.userId !== -1 || userStore.userData.nurseCode)) {
-      /** 判断是否为歌手*/
-      if (to.meta.SingerOnly) {
-        if (userStore.userData.role !== 0) {
-          next()
-        } else {
-          alert("无访问权限!身份认证异常");
-          next('/singHome')
-        }
+    if (localStorage.getItem("NurseToken") && (userData.userId !== -1 || userData.nurseCode || userData.role === 100)) {
+      /** 判断是否为护士*/
+      if (to.meta.NurseOnly) {
+        alert("NurseOnly");
+      } else if (to.meta.AdminOnly){
+        alert("AdminOnly");
+        next()
 
-      } else {
+      }else {
         next()
       }
-    } else {
+    } else if (to.name.includes("admin")) {
+      next('/admin/login')
+    }else {
       alert("无访问权限,请登录");
       next('/user/login')
     }
