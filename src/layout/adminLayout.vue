@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container >
       <el-header class="header">
         <div class="logo flexRowCenter">
           <el-image style="width: 50px; height: 50px" :src="'src/assets/img/hospital.png'" fit="fill" />
@@ -24,17 +24,18 @@
           <el-avatar style="background-color: white" :src="userStore.userData.userAvatarUrl??'src/assets/img/defaultAvatar.png'"/>
         </div>
       </el-header>
-      <el-aside class="aside">
-        <aside-block
-            v-for="(item,index) in textName"
-            :key="index"
-            :index="index"
-            :active="current"
-            :text="item"
-            @click="changeCurrent(index)"
-        />
-      </el-aside>
-      <el-container>
+      <el-container class="container fillContainer">
+        <el-aside class="aside">
+          <aside-block
+              v-for="(item,index) in textName"
+              :key="index"
+              :index="index"
+              :active="current"
+              :text="item"
+              @click="changeCurrent(index)"
+              @toPage="toPage"
+          />
+        </el-aside>
         <router-view></router-view>
       </el-container>
     </el-container>
@@ -45,13 +46,17 @@
 import {useUserStore} from "@/stores/userStore.js";
 import { ArrowDown } from '@element-plus/icons-vue'
 import AsideBlock from "@/layout/AsideBlock.vue";
-import textName from "./json/asideName.json";
+import textName from "@/assets/json/asideName.json";
 import { ref } from 'vue';
+import router from "@/router/index.js";
 const userStore = useUserStore();
 
 const current = ref();
 const changeCurrent = (index) => {
   current.value = index;
+}
+const toPage = (value) => {
+  router.push(value);
 }
 </script>
 
@@ -59,36 +64,44 @@ const changeCurrent = (index) => {
 @import "@/assets/style/globalVariables.module.scss";
 
 $headerHeight:60px;
-  .header{
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    height: $headerHeight;
-    border-bottom: 1px solid lightgray;
+.header{
+  width: 100vw;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  height: $headerHeight;
+  border-bottom: 1px solid lightgray;
 
-    .logo{
-      .text{
-        font-family: cursive;
-        font-weight: bolder;
-        margin-left: 10px;
-      }
+  .logo{
+    .text{
+      font-family: cursive;
+      font-weight: bolder;
+      margin-left: 10px;
     }
-    .user{
-      .text{
-        color: $grayColor;
-        margin-right: 10px;
-        font-size: 14px;
-      };
-    }
-
-
   }
+  .user{
+    .text{
+      color: $grayColor;
+      margin-right: 10px;
+      font-size: 14px;
+    };
+  }
+
+
+}
+
+.container{
+  display: flex;
+  flex-flow: row nowrap;
+
   .aside{
     background-color: white;
     border-right: 1px solid lightgray;
     min-height: calc(100vh - $headerHeight);
     width: 180px;
   }
+}
+
 </style>

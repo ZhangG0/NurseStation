@@ -1,7 +1,7 @@
 <template>
   <div class="asideBlock flexAllCenter" :class="{isActive:props.active === props.index}">
-    <div class="fillContainer" v-if="typeof props.text === 'string'" >
-      <span class="text">{{props.text}}</span>
+    <div class="fillContainer" v-if="typeof props.text.value === 'string'" @click="toPage(props.text.url)">
+      <span class="text">{{props.text.value}}</span>
     </div>
     <el-collapse class="collapse" accordion v-else>
       <el-collapse-item class="item fillContainer">
@@ -13,9 +13,11 @@
               :key="index"
               :index="props.index + '-' + index"
               :active="props.active + '-' + current"
+              :text="subItem"
               class="itemBlock"
-              @click="changeCurrent(index)"
-              :text="subItem"/>
+              @click="changeCurrent(index,subItem.url)"
+              @toPage="toPage"
+              />
         </el-collapse-item>
     </el-collapse>
   </div>
@@ -24,6 +26,8 @@
 
 <script setup>
 import {ref} from "vue";
+import router from "@/router/index.js";
+const emit = defineEmits(["toPage"]);
 const props = defineProps({
   text:{
     type:[String,Object],
@@ -36,8 +40,13 @@ const props = defineProps({
   index:[Number,String]
 })
 const current = ref(-1);
-const changeCurrent = (index) => {
+const changeCurrent = (index,url) => {
   current.value = index;
+  router.push(url);
+}
+const toPage = (url) => {
+  emit("toPage",url);
+
 }
 </script>
 
