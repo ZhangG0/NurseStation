@@ -1,0 +1,44 @@
+{
+  "nurse": [
+    {
+      "prop": "nurseCode",
+      "label": "编号",
+      "isSort": true
+    },
+    {
+      "prop": "userPhone",
+      "label": "手机号",
+      "isSort": false
+    },
+    {
+      "prop": "nurseName",
+      "label": "护士姓名",
+      "isSort": false
+    },
+    {
+      "prop": "nurseTitle",
+      "label": "职称",
+      "isSort": false
+    },
+    {
+      "prop": "nurseDept",
+      "label": "科室",
+      "isSort": false
+    },
+    {
+      "prop": "areasOfExpertise",
+      "label": "擅长领域",
+      "isSort": false
+    },
+    {
+      "prop": "professionalExperience",
+      "label": "执业经历",
+      "isSort": false
+    },
+    {
+      "prop": "role",
+      "label": "管理身份",
+      "isSort": false
+    }
+  ]
+}

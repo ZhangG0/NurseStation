@@ -1,0 +1,19 @@
+[
+    {
+        "value": "设备管理",
+        "url": "/adminHome"
+    },
+    {
+        "title": "人员管理",
+        "subTitle": [
+            {
+                "value": "护士管理",
+                "url": "/admin/NurseManagement"
+            },
+            {
+                "value": "住院管理",
+                "url": "/admin/UserManagement"
+            }
+        ]
+    }
+]
