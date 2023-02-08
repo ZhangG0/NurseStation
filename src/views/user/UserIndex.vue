@@ -157,7 +157,7 @@
 
 <script setup>
 import {computed, reactive, ref} from "vue";
-import gridInfo from './UserIndexGridInfo.json'
+import gridInfo from '../../assets/json/UserIndexGridInfo.json'
 import cssVar from "/src/assets/style/globalVariables.module.scss"
 import {Dialog, Toast} from "vant";
 import {useUserStore} from "@/stores/userStore.js";
