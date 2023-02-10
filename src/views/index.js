@@ -9,6 +9,8 @@ import ArticleDetail from "@/views/universal/ArticleDetail.vue"; //文章详情
 //ADMIN 管理员
 import AdminHome from "@/views/admin/Home.vue";
 import AdminLogin from "@/views/admin/login.vue"
+import UserManagement from "@/views/admin/UserManagement.vue";
+import NurseManagement from "@/views/admin/NurseManagement.vue";
 
 //USER 用户
 import UserLogin from "@/views/user/UserLogin.vue";
@@ -22,6 +24,8 @@ export {
     MyMessage,
     AdminHome,
     AdminLogin,
-    UserLogin
+    UserManagement,
+    NurseManagement,
+    UserLogin,
 
 }

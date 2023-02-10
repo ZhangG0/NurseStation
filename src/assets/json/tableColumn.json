@@ -34,11 +34,6 @@
       "prop": "professionalExperience",
       "label": "执业经历",
       "isSort": false
-    },
-    {
-      "prop": "role",
-      "label": "管理身份",
-      "isSort": false
     }
   ]
 }

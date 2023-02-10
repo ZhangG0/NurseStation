@@ -78,6 +78,7 @@ const routes = [
     path:'/admin',
     component: layout.adminLayout,
     name:'admin',
+    redirect: '/adminHome',
     meta:{
       Authentication:true,
       AdminOnly:true,
@@ -87,7 +88,22 @@ const routes = [
         path:'/adminHome',
         name:'adminHome',
         component: view.AdminHome,
-      }
+      },
+      {
+        path:'/admin/UserManagement',
+        name:'UserManagement',
+        component: view.UserManagement,
+      },
+      {
+        path:'/admin/NurseManagement',
+        name:'NurseManagement',
+        component: view.NurseManagement,
+      },
+      // {
+      //   path:'/admin/nurse',
+      //   name:'UserManagement',
+      //   component: view.UserManagement,
+      // }
     ]
   }
 
@@ -107,7 +123,7 @@ router.beforeEach((to, from, next) => {
       /** 判断是否为护士*/
       if (to.meta.NurseOnly) {
         alert("NurseOnly");
-      } else if (to.meta.AdminOnly){
+      } else if (to.meta.AdminOnly && userData.role === 100){
         alert("AdminOnly");
         next()
 
