@@ -35,5 +35,62 @@
       "label": "执业经历",
       "isSort": false
     }
+  ],
+  "user": [
+    {
+      "prop": "userCode",
+      "label": "用户编号",
+      "isSort": true
+    },
+    {
+      "prop": "userPhone",
+      "label": "手机号",
+      "isSort": false
+    },
+    {
+      "prop": "userName",
+      "label": "病患姓名",
+      "isSort": false
+    },
+    {
+      "prop": "userGender",
+      "label": "性别",
+      "isSort": false
+    },
+    {
+      "prop": "userAge",
+      "label": "年龄",
+      "isSort": false
+    },
+    {
+      "prop": "userBirthday",
+      "label": "出生日期",
+      "isSort": false
+    },
+    {
+      "prop": "userAdmissionDate",
+      "label": "入院日期",
+      "isSort": false
+    },
+    {
+      "prop": "userDischargeDate",
+      "label": "出院日期",
+      "isSort": false
+    },
+    {
+      "prop": "userAreaCode",
+      "label": "病区号",
+      "isSort": false
+    },
+    {
+      "prop": "userRoomCode",
+      "label": "病房号",
+      "isSort": false
+    },
+    {
+      "prop": "userBedCode",
+      "label": "病床号",
+      "isSort": false
+    }
   ]
 }
