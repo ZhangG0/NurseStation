@@ -39,6 +39,8 @@
           <van-cell title="病区号" size="large" :value="personInfo.value.userAreaCode"/>
           <van-cell title="病房号" size="large" :value="personInfo.value.userRoomCode"/>
           <van-cell title="病床号" size="large" :value="personInfo.value.userBedCode"/>
+          <van-cell title="入院日期" size="large" :value="personInfo.value.userAdmissionDate"/>
+          <van-cell title="出院日期" size="large" :value="personInfo.value.userDischargeDate"/>
           <van-cell title="责任护士" size="large" :value="personInfo.value.userNurse"/>
         </div>
         <div v-else-if="userStore.userData.nurseName">
