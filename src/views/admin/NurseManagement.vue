@@ -197,7 +197,8 @@ const load = () => {
 }
 //编辑用户
 const handleEdit = (row) => {
-  form.value = row;
+  const value = JSON.parse(JSON.stringify(row));
+  form.value = value;
   isAdd.value = false;
   dialogVisible.value = true;
 }
