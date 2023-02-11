@@ -97,13 +97,12 @@
           </el-select>
         </el-form-item>
 
-
-
       </el-form>
       <template #footer>
           <span class="dialog-footer">
             <el-button @click="dialogVisible = false">取消</el-button>
-            <el-button type="primary" @click="save">完成</el-button>
+            <el-button v-if="isAdd" type="primary" @click="save">完成</el-button>
+            <el-button v-else type="primary" @click="saveEdit">确认编辑</el-button>
           </span>
       </template>
     </el-dialog>
@@ -174,8 +173,7 @@ const rules = reactive({
     },
   ],
 })
-
-
+const isAdd = ref(true);
 
 onMounted(() =>{
   load();
@@ -200,6 +198,7 @@ const load = () => {
 //编辑用户
 const handleEdit = (row) => {
   form.value = row;
+  isAdd.value = false;
   dialogVisible.value = true;
 }
 //删除用户
@@ -232,6 +231,23 @@ const save = () => {
       })
     }
   })
+}
+const saveEdit = () => {
+  formDom.value.validate((val) => {
+    if (val){
+      Request.post("/nurse/editNurse",form.value).then((res) => {
+        if (res.status === 200){
+          ElMessage.success("编辑成功");
+          dialogVisible.value = false;
+          isAdd.value = false;
+          load();
+        }else {
+          ElMessage.error("编辑失败," + res.msg);
+        }
+      })
+    }
+  })
+
 }
 //初始化form表单信息
 const initFormData = () => {
