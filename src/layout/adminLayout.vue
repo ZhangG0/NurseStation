@@ -9,7 +9,7 @@
         <div class="user flexRowCenter">
           <el-dropdown class="text">
             <span class="el-dropdown-link">
-             <div style="display: inline-block;cursor: pointer">{{ userStore.userData.userName }}</div>
+             <div style="display: inline-block;cursor: pointer">{{ userStore.userData.nurseName }}</div>
               <el-icon class="el-icon--right">
                 <arrow-down />
               </el-icon>
@@ -34,6 +34,7 @@
               :text="item"
               @click="changeCurrent(index)"
               @toPage="toPage"
+              v-show="isShow(userStore.userData.nurseRole,item.isAdmin)"
           />
         </el-aside>
         <router-view></router-view>
@@ -52,6 +53,13 @@ import router from "@/router/index.js";
 const userStore = useUserStore();
 
 const current = ref();
+const isShow = (role,isAdmin) => {
+  if (isAdmin){
+    return role === 100;
+  }else {
+    return true;
+  }
+}
 const changeCurrent = (index) => {
   current.value = index;
 }
