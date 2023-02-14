@@ -1,10 +1,12 @@
 [
     {
         "value": "设备管理",
-        "url": "/adminHome"
+        "url": "/adminHome",
+        "isAdmin": false
     },
     {
         "title": "人员管理",
+        "isAdmin": true,
         "subTitle": [
             {
                 "value": "护士管理",
@@ -15,5 +17,10 @@
                 "url": "/admin/UserManagement"
             }
         ]
+    },
+    {
+        "value": "病患评估表",
+        "url": "/admin/EvaluationForm",
+        "isAdmin": false
     }
 ]

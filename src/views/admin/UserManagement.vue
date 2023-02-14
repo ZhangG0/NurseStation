@@ -9,7 +9,7 @@
       </div>
       <!--    搜索区域-->
       <div style="margin: 10px 0">
-        <el-input label="护士查询" v-model="search" placeholder="请输入关键字" style="width: 15%" clearable />
+        <el-input label="用户查询" v-model="search" placeholder="请输入关键字" style="width: 15%" clearable />
         <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
       </div>
       <!--表格展示区域    -->

@@ -81,29 +81,40 @@ const routes = [
     redirect: '/adminHome',
     meta:{
       Authentication:true,
-      AdminOnly:true,
     },
     children:[
       {
         path:'/adminHome',
         name:'adminHome',
         component: view.AdminHome,
+        meta: {
+          NurseOnly:true,
+        }
       },
       {
         path:'/admin/UserManagement',
         name:'UserManagement',
         component: view.UserManagement,
+        meta: {
+          AdminOnly:true,
+        }
       },
       {
         path:'/admin/NurseManagement',
         name:'NurseManagement',
         component: view.NurseManagement,
+        meta: {
+          AdminOnly:true,
+        }
       },
-      // {
-      //   path:'/admin/nurse',
-      //   name:'UserManagement',
-      //   component: view.UserManagement,
-      // }
+      {
+        path:'/admin/EvaluationForm',
+        name:'EvaluationForm',
+        component: view.EvaluationForm,
+        meta: {
+          NurseOnly:true,
+        }
+      }
     ]
   }
 
@@ -119,14 +130,22 @@ router.beforeEach((to, from, next) => {
   const userData = useUserStore().userData;
   if (to.meta.Authentication) { //需要登录才能进入
         //确认存在token,且存在用户或护士的code
-    if (localStorage.getItem("NurseToken") && (userData.userId !== -1 || userData.nurseCode || userData.role === 100)) {
+    if (localStorage.getItem("NurseToken") && (userData.userId !== -1 || userData.nurseCode || userData.nurseRole === 100)) {
       /** 判断是否为护士*/
       if (to.meta.NurseOnly) {
-        alert("NurseOnly");
-      } else if (to.meta.AdminOnly && userData.role === 100){
-        alert("AdminOnly");
-        next()
-
+        if ([0,100].includes(userData.nurseRole)){
+          next();
+        }else {
+          alert("无访问权限");
+          router.back();
+        }
+      } else if (to.meta.AdminOnly){
+        if (userData.nurseRole === 100){
+          next();
+        }else {
+          alert("无访问权限");
+          router.back();
+        }
       }else {
         next()
       }
