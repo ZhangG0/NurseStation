@@ -128,6 +128,11 @@
       "prop": "userBedCode",
       "label": "病床号",
       "isSort": false
+    },
+    {
+      "prop": "todayEvaluation",
+      "label": "今日完成情况",
+      "isSort": true
     }
   ],
   "personEvaluation": [

@@ -29,12 +29,14 @@
             :key="index"
             :prop="item.prop"
             :label="item.label"
-            :sortable="item.isSort"/>
+            :sortable="item.isSort">
+          <template #default="scope">
+            <el-result
+                v-if="item.prop === 'todayEvaluation'"
+                :icon="scope.row.todayEvaluation?'success':'error'"
+            />
+          </template>
 
-        <el-table-column label="今日完成情况" align="center">
-          <el-result
-              icon="error"
-          />
         </el-table-column>
 
         <el-table-column class="flexCenter" fixed="right" align="center" label="操作" width="140">
@@ -89,6 +91,7 @@
             <el-date-picker
                 v-model="form.value.evaluationDate"
                 type="date"
+                value-format="YYYY-MM-DD"
                 style="width: 100%;"
             />
           </el-form-item>
@@ -153,7 +156,9 @@ import json from '@/assets/json/tableColumn.json';
 import {onMounted, reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 import dayjs from "dayjs";
+import {useUserStore} from "@/stores/userStore.js";
 
+const userStore = useUserStore();
 const tableData = reactive({
   value:[]
 });
@@ -182,8 +187,10 @@ onMounted(() =>{
 })
 //查询
 const load = () => {
-  Request.get('/admin/allUserInfo',{
+  Request.get('/evaluation/getAllTable',{
     params:{
+      nurseCode: userStore.userData.nurseCode,
+      nurseRole: userStore.userData.nurseRole,
       pageNum:currentPage.value,
       pageSize:pageSize.value,
       search:search.value
@@ -202,6 +209,8 @@ const handleEdit = (row) => {
   form.value = {
     userCode: row.userCode,
     userName: row.userName,
+    nurseCode: userStore.userData.nurseCode,
+    nurseName: userStore.userData.nurseName,
     evaluationDate: dayjs().format("YYYY-MM-DD")
   }
   dialogVisible.value = true;
@@ -219,13 +228,13 @@ const saveEvaluationForm = () => {
     Request.post('/evaluation/addEvaluationForm',form.value).then((res) => {
       if (res.status === 200){
         ElMessage.success("已完成【" + form.value.userName + "】的评估");
+        load();
         dialogVisible.value = false;
       }else {
         ElMessage.error(res.msg);
       }
     })
   }catch (e) {
-    console.log(e);
     ElMessage.error("出问题啦，请重试~")
   }
 
@@ -248,7 +257,6 @@ const addEvaluationItem = (displayName) => {
 //删除动态输入框
 const removeDomain = (index) => {
   if (index !== -1) {
-    console.log(form.domains[index].displayAttr + 'Value')
     delete form.value[form.domains[index].displayAttr + 'Value']
     form.domains.splice(index, 1);
   }

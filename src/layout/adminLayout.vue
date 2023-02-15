@@ -17,7 +17,7 @@
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item @click="$router.push('/person')">个人信息</el-dropdown-item>
-                <el-dropdown-item @click="$router.push('/login')">退出登录</el-dropdown-item>
+                <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -62,6 +62,11 @@ const isShow = (role,isAdmin) => {
 }
 const changeCurrent = (index) => {
   current.value = index;
+}
+const logout = () => {
+  window.localStorage.removeItem("NurseToken");
+  userStore.$reset();
+  router.push('/admin/login');
 }
 const toPage = (value) => {
   router.push(value);

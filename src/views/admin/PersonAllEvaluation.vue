@@ -79,6 +79,8 @@
           <el-descriptions-item label="评估时间">{{ detailData.value.evaluationDate}}</el-descriptions-item>
           <el-descriptions-item label="患者姓名">{{ detailData.value.userName}}</el-descriptions-item>
           <el-descriptions-item label="患者编号">{{ detailData.value.userCode}}</el-descriptions-item>
+          <el-descriptions-item label="护士编号">{{ detailData.value.nurseCode}}</el-descriptions-item>
+          <el-descriptions-item label="护士姓名">{{ detailData.value.nurseName}}</el-descriptions-item>
           <el-descriptions-item
               v-for="(item,index) in detailData.value.evaluationData"
               :key="index"
@@ -166,7 +168,7 @@ const load = () => {
 //查看评估表详情
 const formDetail = (row) => {
   // detailData.value = row;
-  const {userName,userCode,evaluationDate,evaluationCode,...domains} = row;
+  const {userName,userCode,nurseCode,nurseName,evaluationDate,evaluationCode,...domains} = row;
   const evaluationData = [];
   let tempObj = {};
   //循环domains将所有自定义项两个两个合为一个对象，把所有对象变成一个数组
@@ -182,9 +184,12 @@ const formDetail = (row) => {
     }
 
   })
+  //给数据动态赋值
   detailData.value = {
     userName: userName,
     userCode: userCode,
+    nurseCode: nurseCode,
+    nurseName: nurseName,
     evaluationDate: evaluationDate,
     evaluationCode: evaluationCode,
     evaluationData: evaluationData
