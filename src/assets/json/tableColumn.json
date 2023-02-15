@@ -129,5 +129,22 @@
       "label": "病床号",
       "isSort": false
     }
+  ],
+  "personEvaluation": [
+    {
+      "prop": "userCode",
+      "label": "用户编号",
+      "isSort": true
+    },
+    {
+      "prop": "userName",
+      "label": "病患姓名",
+      "isSort": false
+    },
+    {
+      "prop": "evaluationDate",
+      "label": "评估日期",
+      "isSort": true
+    }
   ]
 }

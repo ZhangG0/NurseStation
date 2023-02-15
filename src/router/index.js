@@ -108,6 +108,14 @@ const routes = [
         }
       },
       {
+        path:'/admin/PersonAllEvaluation',
+        name:'PersonAllEvaluation',
+        component: view.PersonAllEvaluation,
+        meta: {
+          NurseOnly:true,
+        }
+      },
+      {
         path:'/admin/EvaluationForm',
         name:'EvaluationForm',
         component: view.EvaluationForm,

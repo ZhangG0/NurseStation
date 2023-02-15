@@ -40,7 +40,10 @@
         <el-table-column class="flexCenter" fixed="right" align="center" label="操作" width="140">
           <template #default="scope">
             <el-button size="small" @click="handleEdit(scope.row)">填写评估表</el-button>
-            <el-button size="small" style="margin-top: 5px;margin-left: 0" >查看评估表</el-button>
+            <el-button size="small"
+                       style="margin-top: 5px;margin-left: 0"
+                       @click="openAllEvaluation(scope.row.userCode)"
+                        >查看评估表</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -203,6 +206,10 @@ const handleEdit = (row) => {
   }
   dialogVisible.value = true;
 }
+//查看该患者历史评估表
+const openAllEvaluation = (userCode) => {
+  router.push({name:'PersonAllEvaluation',query: {userCode:userCode}});
+}
 //dialog完成按钮 保存评估表
 const saveEvaluationForm = () => {
   try {
@@ -238,6 +245,7 @@ const addEvaluationItem = (displayName) => {
     return ElMessage.error("评估项不可为空！");
   }
 }
+//删除动态输入框
 const removeDomain = (index) => {
   if (index !== -1) {
     console.log(form.domains[index].displayAttr + 'Value')

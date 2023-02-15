@@ -13,6 +13,7 @@ import AdminLogin from "@/views/admin/login.vue"
 import UserManagement from "@/views/admin/UserManagement.vue";
 import NurseManagement from "@/views/admin/NurseManagement.vue";
 import EvaluationForm from "@/views/admin/EvaluationForm.vue"
+import PersonAllEvaluation from "@/views/admin/PersonAllEvaluation.vue"
 
 //USER 用户
 import UserLogin from "@/views/user/UserLogin.vue";
@@ -29,6 +30,7 @@ export {
     UserManagement,
     NurseManagement,
     EvaluationForm,
+    PersonAllEvaluation,
     UserLogin,
 
 }
