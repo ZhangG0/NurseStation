@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container >
       <el-header class="header">
-        <div class="logo flexRowCenter">
+        <div class="logo flexRowCenter" @click="$router.push('/admin')">
           <el-image style="width: 50px; height: 50px" :src="'src/assets/img/hospital.png'" fit="fill" />
           <span class="text">XX医院护士站系统</span>
         </div>
@@ -88,6 +88,7 @@ $headerHeight:60px;
   border-bottom: 1px solid lightgray;
 
   .logo{
+    cursor: pointer;
     .text{
       font-family: cursive;
       font-weight: bolder;
