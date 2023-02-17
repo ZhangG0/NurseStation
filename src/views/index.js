@@ -8,7 +8,7 @@ import ArticleDetail from "@/views/universal/ArticleDetail.vue"; //文章详情
 
 
 //ADMIN 管理员
-import AdminHome from "@/views/admin/Home.vue";
+import AdminHome from "@/views/admin/AdminHome.vue";
 import AdminLogin from "@/views/admin/login.vue"
 import UserManagement from "@/views/admin/UserManagement.vue";
 import NurseManagement from "@/views/admin/NurseManagement.vue";
