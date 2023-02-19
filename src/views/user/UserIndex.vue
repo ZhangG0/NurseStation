@@ -256,7 +256,7 @@ const changeDtStatus = (dtCode,index,dtStatus,dtTime,detail) => {
     Toast("已完成任务，无需重复确认")
   }
 }
-Request.post("/daily/getDailyTask",{userCode:userStore.userData.userCode !== -1?userStore.userData.userCode:userStore.userData.nurseCode}).then(res => {
+Request.post("/daily/getDailyTask",{userCode: userStore.userData.nurseCode || userStore.userData.userCode}).then(res => {
   if (res.status === 200){
     dailyTasks.value = res.data;
   }else {
@@ -548,7 +548,7 @@ const openDialog = (text) => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/style/globalVariables.module.scss";
+@import "src/assets/style/globalVariables.module";
 
 .background_div{
   padding-top: 0;
