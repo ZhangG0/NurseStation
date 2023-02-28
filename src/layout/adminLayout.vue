@@ -52,7 +52,7 @@ import { ref } from 'vue';
 import router from "@/router/index.js";
 const userStore = useUserStore();
 
-const current = ref();
+const current = ref(0);
 const isShow = (role,isAdmin) => {
   if (isAdmin){
     return role === 100;
