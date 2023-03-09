@@ -18,6 +18,8 @@ import PersonAllEvaluation from "@/views/admin/PersonAllEvaluation.vue"
 //USER 用户
 import UserLogin from "@/views/user/UserLogin.vue";
 
+import ScanCode from "@/views/universal/ScanCode.vue"
+import TextPage from "@/views/TestPage.vue"
 
 export {
     UserIndex,
@@ -32,5 +34,7 @@ export {
     EvaluationForm,
     PersonAllEvaluation,
     UserLogin,
+    ScanCode,
+    TextPage
 
 }

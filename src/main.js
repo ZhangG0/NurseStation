@@ -13,14 +13,18 @@ import './assets/style/fonts/iconfont.css'
 import 'vant/es/toast/style';
 import 'vant/es/dialog/style';
 
+import QrReader from 'vue3-qr-reader';
+
 import App from './App.vue'
 import router from './router'
 
-
-
+// import Vconsole from 'vconsole'
+// let vConsole = new Vconsole()
+// export default vConsole;
 const app = createApp(App)
 
 app.use(ElementPlus)
 app.use(router)
 app.use(pinia)
+app.use(QrReader);
 app.mount('#app')

@@ -65,9 +65,15 @@ const routes = [
 
   //护士端
   {
-
+    path:'/scanner',
+    name:'Scanner',
+    component:view.ScanCode
   },
-
+  {
+    path:'/test',
+    name: 'TextPage',
+    component: view.TextPage
+  },
   //管理端
   {
     path:'/admin/login',
