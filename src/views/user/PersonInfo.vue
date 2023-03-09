@@ -122,6 +122,7 @@ const logout = () => {
   window.localStorage.removeItem("NurseToken");
   //pinia持久化删除
   window.sessionStorage.removeItem("user");
+  Toast.success("登出成功");
   router.push("/community");
 }
 </script>
