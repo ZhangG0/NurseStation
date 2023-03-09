@@ -256,7 +256,7 @@ const changeDtStatus = (dtCode,index,dtStatus,dtTime,detail) => {
     Toast("已完成任务，无需重复确认")
   }
 }
-Request.post("/daily/getDailyTask",{userCode: userStore.userData.nurseCode || userStore.userData.userCode}).then(res => {
+Request.post("/daily/getDailyTask",{userCode: userStore.userData.userCode === -1?userStore.userData.nurseCode:userStore.userData.userCode}).then(res => {
   if (res.status === 200){
     dailyTasks.value = res.data;
   }else {
