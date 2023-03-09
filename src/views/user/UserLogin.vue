@@ -151,7 +151,6 @@ const roleCode = ref('0'); //默认为用户
 /**登录*/
 const onSubmit = (values) => {
   loggingIn.value = true;
-  console.log(values)
   Request.post('/user/login',values).then(res =>{
     if (res.status === 200){
       Toast("登录成功");

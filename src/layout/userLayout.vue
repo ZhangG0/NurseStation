@@ -6,6 +6,7 @@
 
     <div style="margin-top: 10px">
       <van-tabbar
+          safe-area-inset-bottom
           v-model="active"
           placeholder
           route
