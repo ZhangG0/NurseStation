@@ -27,14 +27,18 @@ export const useUserStore = defineStore("user", {
     getters: {
         getPhone(){
             if (this.userData.userPhone) {
-                return this.userData.userPhone.replace(this.userData.userPhone.substring(3, 7), "****");
+                let str = this.userData.userPhone;
+                return str;
+                // return str.replace(str.substring(3, 7), "****");
             } else {
                 return undefined;
             }
         },
         getIdCode(){
             if (this.userData.userCode) {
-                return this.userData.userCode.replace(this.userData.userCode.substring(14,18), "****");
+                let str = this.userData.userCode;
+                return str;
+                // return str.replace(str.substring(14,18), "****");
             } else {
                 return undefined;
             }

@@ -62,16 +62,14 @@
               >登录</el-button>
             </el-form-item>
           </el-form>
-          <div style="margin: 10px" v-else>
+          <div style="margin: 20px" v-else>
             <qrcode-vue :value="qrCode" :size="130"></qrcode-vue>
             <div style="margin-top: 5px;font-family: cursive;font-weight: bolder ">请在手机端扫码登录</div>
+            <van-button round size="small" @click="refreshQrCode">刷新</van-button>
           </div>
 
         </div>
       </div>
-
-
-
 
     </el-card>
   </div>
@@ -183,12 +181,71 @@ export default {
 }
 </script>
 <script setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import QrcodeVue from 'qrcode.vue'
+import {ElMessage} from "element-plus";
+import router from "@/router/index.js";
 
+const userInfo = useUserStore();
 const activeIndex = ref('1');
 const isAdmin = ref(false);
-const qrCode = ref("123456")
+const qrCode = ref("");
+
+
+onMounted(() => {
+  getQrCode();
+})
+
+// 一秒轮询一次，查看二维码状态
+const polling = setInterval(() => {
+    if (qrCode.value) {
+      qrCodeCheck();
+    }
+  }, 1000);
+
+const refreshQrCode = () => {
+  getQrCode();
+  // qrCodeCheck();
+}
+
+const getQrCode = async () => {
+  try {
+    const res = await Request.get('/admin/getQrCode');
+    qrCode.value = res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const qrCodeCheck = () => {
+  Request.get("/admin/getQrCode",{
+    params: {uuid:qrCode.value}
+  }).then((res) =>{
+    console.log(res.data)
+    if (res.status===200 && res.data.codeStatus === "CONFIRMED"){
+      Request.post("/admin/confirmQrLogin",null,{
+        params:{
+          uuid:qrCode.value,
+          token:res.data.token
+        }
+      }).then((res) =>{
+        if (res.status === 200){
+          userInfo.initUser(res.data);
+          localStorage.setItem("NurseToken",res.data.userPassword);
+          router.push('/admin');
+
+          ElMessage({
+            type: 'success',
+            message: '登录成功,欢迎【'+res.data.nurseName +'】',
+          })
+          clearInterval(polling);
+        }
+      }).catch((err) => {
+        ElMessage.error("登陆失败:" + err.msg)
+      })
+    }
+  })
+}
 </script>
 
 
@@ -201,7 +258,7 @@ const qrCode = ref("123456")
   justify-content: center;
 
   :deep(.el-card__body){
-    min-height: 290px;
+    min-height: 340px;
   }
 
 }
