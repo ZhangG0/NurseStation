@@ -63,11 +63,12 @@
             </el-form-item>
           </el-form>
           <div style="margin: 20px" v-else>
-            <qrcode-vue :value="qrCode" :size="130"></qrcode-vue>
+            <qrcode-vue v-if="qrCode" :value="qrCode" :size="130"></qrcode-vue>
             <div style="margin-top: 5px;font-family: cursive;font-weight: bolder ">请在手机端扫码登录</div>
-            <van-button round size="small" @click="refreshQrCode">刷新</van-button>
+            <el-button circle @click="refreshQrCode">
+              <el-icon><Refresh/></el-icon>
+            </el-button>
           </div>
-
         </div>
       </div>
 
@@ -80,6 +81,7 @@ import {reactive} from "vue";
 import Request from "../../utils/Request";
 import {useUserStore} from "@/stores/userStore.js";
 import {Toast} from "vant";
+import {Refresh} from '@element-plus/icons-vue'
 
 export default {
   name:"AdminLogin",
