@@ -3,7 +3,7 @@
     <el-container >
       <el-header class="header">
         <div class="logo flexRowCenter" @click="$router.push('/admin')">
-          <el-image style="width: 50px; height: 50px" :src="'src/assets/img/hospital.png'" fit="fill" />
+          <el-image style="width: 50px; height: 50px" :src="hospitalImg" fit="fill" />
           <span class="text">XX医院护士站系统</span>
         </div>
         <div class="user flexRowCenter">
@@ -21,7 +21,7 @@
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-avatar style="background-color: white" :src="userStore.userData.userAvatarUrl??'src/assets/img/defaultAvatar.png'"/>
+          <el-avatar style="background-color: white" :src="userStore.userData.userAvatarUrl??avatarImg"/>
         </div>
       </el-header>
       <el-container class="container fillContainer">
@@ -50,6 +50,8 @@ import AsideBlock from "@/layout/AsideBlock.vue";
 import textName from "@/assets/json/asideName.json";
 import { ref } from 'vue';
 import router from "@/router/index.js";
+import hospitalImg from '@/assets/img/hospital.png';
+import avatarImg from '@/assets/img/defaultAvatar.png';
 const userStore = useUserStore();
 
 const current = ref(0);

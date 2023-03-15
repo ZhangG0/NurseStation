@@ -6,7 +6,7 @@
           width="50px"
           height="50px"
           round
-          :src="props.showData.userAvatarUrl?props.showData.userAvatarUrl:'src/assets/img/defaultAvatar.png'"/>
+          :src="props.showData.userAvatarUrl?props.showData.userAvatarUrl:avatarImg"/>
       <div class="name-title">
         <span class="name">{{props.showData.userName}}</span>
         <span class="title" v-if="props.showData.userTitle">{{props.showData.userTitle}}</span>
@@ -46,6 +46,7 @@
 
 
 <script setup>
+import avatarImg from '@/assets/img/defaultAvatar.png'
 
 const props = defineProps({
   showData:{

@@ -28,7 +28,7 @@
                   round
                   width="60px"
                   height="60px"
-                  :src="personInfo.value.userAvatarUrl?personInfo.value.userAvatarUrl:'src/assets/img/defaultAvatar.png'"
+                  :src="personInfo.value.userAvatarUrl?personInfo.value.userAvatarUrl:avatarImg"
               />
             </van-uploader>
 
@@ -76,6 +76,7 @@ import Request from "@/utils/Request.js";
 import {getFormData} from "@/utils/ZhangG0CommonUtils.js";
 import {Toast} from "vant";
 import router from "@/router/index.js";
+import avatarImg from '@/assets/img/defaultAvatar.png';
 
 const userStore = useUserStore();
 const personInfo = reactive({value: {}});

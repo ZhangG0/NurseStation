@@ -32,7 +32,7 @@
               round
               width="60px"
               height="60px"
-              :src="item.userAvatarUrl?item.userAvatarUrl:'src/assets/img/defaultAvatar.png'"
+              :src="item.userAvatarUrl?item.userAvatarUrl:avatarImg"
           />
 
           <span class="card-name">{{item.userName}}</span>
@@ -44,6 +44,7 @@
 </template>
 
 <script setup>
+import avatarImg from '@/assets/img/defaultAvatar.png';
 
 const mock = [
   {

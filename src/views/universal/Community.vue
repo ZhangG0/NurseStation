@@ -98,14 +98,17 @@ import {useUserStore} from "@/stores/userStore.js";
 import cssVar from "@/assets/style/globalVariables.module.scss";
 import router from "@/router/index.js";
 import Request from "@/utils/Request.js"
+import img1 from '@/assets/img/LBT-IMG.png';
+import img2 from '@/assets/img/LBT-IMG2.png';
+
 const VanDialog = Dialog.Component;
 const userStore = useUserStore();
 
 /**轮播图图片地址*/
 const images = [
-  'src/assets/img/LBT-IMG.png',
-  'src/assets/img/LBT-IMG2.png',
-  'src/assets/img/LBT-IMG.png',
+  img1,
+  img2,
+  img1,
 ];
 /**End*/
 

@@ -6,7 +6,7 @@
             width="60px"
             height="60px"
             round
-            :src="articleInfo.userAvatarUrl?articleInfo.userAvatarUrl:'src/assets/img/defaultAvatar.png'"/>
+            :src="articleInfo.userAvatarUrl?articleInfo.userAvatarUrl:avatarImg"/>
         <div class="name-title">
           <span class="name">{{ articleInfo.userName }}</span>
           <span class="title" v-if="articleInfo.userTitle">{{ articleInfo.userTitle }}</span>
@@ -106,6 +106,7 @@ import Request from "@/utils/Request.js"
 import {Toast} from "vant";
 import {useUserStore} from "@/stores/userStore.js";
 import router from "@/router/index.js";
+import avatarImg from '@/assets/img/defaultAvatar.png';
 
 const getComments = (articleCode) => {
   Request.post('/article/getArticleComments', {articleCode: articleCode}).then(res => {

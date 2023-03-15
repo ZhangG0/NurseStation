@@ -7,7 +7,7 @@
               width="40px"
               height="40px"
               round
-              :src="props.commentInfo.userAvatarUrl?props.commentInfo.userAvatarUrl:'src/assets/img/defaultAvatar.png'"/>
+              :src="props.commentInfo.userAvatarUrl?props.commentInfo.userAvatarUrl:avatarImg"/>
           <div class="name-title">
             <span class="name">{{ props.commentInfo.userName }}</span>
             <span class="title" v-if="props.commentInfo.userTitle">{{ props.commentInfo.userTitle }}</span>
@@ -65,6 +65,7 @@
 </template>
 
 <script setup>
+import avatarImg from '@/assets/img/defaultAvatar.png';
 
 const emit = defineEmits(['submitSonComment']);
 const props = defineProps({
