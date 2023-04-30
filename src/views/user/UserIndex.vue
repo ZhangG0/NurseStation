@@ -78,7 +78,7 @@
                   <el-descriptions-item label="治疗方式" :span="2">{{item.treatType}}</el-descriptions-item>
                   <el-descriptions-item label="治疗时间">{{item.dtTime}}</el-descriptions-item>
                   <el-descriptions-item label="责任护士" >{{userStore.userData.userNurse??userStore.userData.nurseName}}</el-descriptions-item>
-                  <el-descriptions-item v-if="!userStore.userData.nurseCode" label="医嘱详情" :span="2">{{item.dtDetail}}</el-descriptions-item>
+                  <el-descriptions-item v-if="item.treatType !=='日常查房'" label="医嘱详情" :span="2">{{item.dtDetail}}</el-descriptions-item>
                 </el-descriptions>
 
               </template>
@@ -220,8 +220,6 @@ const getStatusType = (statusNum) => {
 }
   /**改变任务状态*/
 const changeDtStatus = (dtCode,index,dtStatus,dtTime,detail) => {
-    console.log(detail);
-    console.log(userStore.userData.nurseCode)
   if (detail === "日常查房" && userStore.userData.userCode>0 && dtStatus !== "0"){
     return Toast(`若已完成${detail}请联系责任护士更改`);
   }

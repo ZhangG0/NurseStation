@@ -123,7 +123,7 @@ Request.get("/article/getArticle").then(res => {
 }).catch(() =>{Toast.fail("请求异常！")})
     .finally(() =>{loading.skeleton = false;});
 const addNewArticle = () => {
-  if (localStorage.getItem("NurseToken") && userStore.userData.userId === -1){
+  if (!localStorage.getItem("NurseToken")){
     Dialog.alert({
       message: '请先登录！',
       confirmButtonColor: cssVar.DarkThemeGreen,
